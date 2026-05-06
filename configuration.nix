@@ -172,8 +172,8 @@
     google-chrome
     kdePackages.dolphin
     polkit_gnome
-    vscode
-    antigravity
+    (vscode.override { commandLineArgs = "--password-store=gnome"; })
+    (antigravity.override { commandLineArgs = "--password-store=gnome"; })
     libsecret
   ];
 
