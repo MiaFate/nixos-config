@@ -45,11 +45,24 @@
   i18n.inputMethod = {
     enable = true;
     type = "fcitx5";
-    fcitx5.waylandFrontend = true;
-    fcitx5.addons = with pkgs; [
-      fcitx5-mozc
-      fcitx5-gtk
-    ];
+    fcitx5 = {
+      waylandFrontend = true;
+      ignoreUserConfig = true;
+      addons = with pkgs; [
+        fcitx5-mozc
+        fcitx5-gtk
+      ];
+      settings.inputMethod = {
+        "Groups/0" = {
+          Name = "Default";
+          "Default Layout" = "us";
+          DefaultIM = "keyboard-us-intl";
+        };
+        "Groups/0/Items/0".Name = "keyboard-us-intl";
+        "Groups/0/Items/1".Name = "mozc";
+        GroupOrder."0" = "Default";
+      };
+    };
   };
 
   # Variables de entorno para Wayland/Niri y Fcitx5
@@ -61,6 +74,21 @@
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
+  services.xserver.videoDrivers = [ "nvidia" ];
+
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
+
+  hardware.nvidia = {
+    modesetting.enable = true;
+    powerManagement.enable = false;
+    powerManagement.finegrained = false;
+    open = false;
+    nvidiaSettings = true;
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
+  };
 
   # SDDM Configuration
   services.displayManager.sddm = {
@@ -142,11 +170,21 @@
     qt6Packages.fcitx5-configtool
     spotify
     google-chrome
+    kdePackages.dolphin
+    polkit_gnome
+    vscode
+    antigravity
+    libsecret
   ];
 
   environment.sessionVariables = {
 	WLR_NO_HARDWARE_CURSORS = "1";
   	NIXOS_OZONE_WL = "1";
+        XDG_CURRENT_DESKTOP = "niri:GNOME";   # Importante para que los portales sepan quién manda
+        XDG_SESSION_TYPE = "wayland";
+        GBM_BACKEND = "nvidia-drm";
+        __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+        LIBVA_DRIVER_NAME = "nvidia";
   };
 
   # XDG Portals
@@ -156,7 +194,18 @@
       pkgs.xdg-desktop-portal-gnome
       pkgs.xdg-desktop-portal-gtk
     ];
-    config.common.default = [ "gnome" "gtk" ];
+    config = {
+      niri = {
+        default = [ "gnome" "gtk" ];
+        "org.freedesktop.impl.portal.FileChooser" = [ "gtk" ];
+        "org.freedesktop.impl.portal.ScreenCast" = [ "gnome" ];
+        "org.freedesktop.impl.portal.Screenshot" = [ "gnome" ];
+      };
+      common = {
+        default = [ "gnome" "gtk" ];
+        "org.freedesktop.impl.portal.FileChooser" = [ "gtk" ];
+      };
+    };
   };
 
   # Programs and services
@@ -164,12 +213,29 @@
   services.gnome.gcr-ssh-agent.enable = false;
   programs.niri.enable = true;
   security.polkit.enable = true;
+  services.gnome.gnome-keyring.enable = true;
+  security.pam.services.sddm.enableGnomeKeyring = true;
+  programs.seahorse.enable = true;
   services.devmon.enable = true;
   programs.thunar.enable = true;
   programs.thunar.plugins = [
     pkgs.thunar-archive-plugin
     pkgs.thunar-volman
   ];
+
+  systemd.user.services.polkit-gnome-authentication-agent-1 = {
+  description = "polkit-gnome-authentication-agent-1";
+  wantedBy = [ "graphical-session.target" ];
+  wants = [ "graphical-session.target" ];
+  after = [ "graphical-session.target" ];
+  serviceConfig = {
+    Type = "simple";
+    ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
+    Restart = "on-failure";
+    RestartSec = 1;
+    TimeoutStopSec = 10;
+  };
+};
 
   programs.dms-shell = {
     enable = true;
