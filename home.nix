@@ -28,8 +28,8 @@
     oh-my-zsh = {
       enable = true;
       plugins = [ "git" "z" ];
-      custom = "$HOME/.oh-my-zsh/custom/";
-      theme = "powerlevel10k/powerlevel10k";
+      custom = "$HOME/.oh-my-zsh/custom";
+      theme = "powerlevel10k";
     };
     initContent = ''
       # Cargar p10k si existe
