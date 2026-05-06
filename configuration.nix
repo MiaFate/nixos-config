@@ -41,13 +41,24 @@
     LC_TIME = "es_AR.UTF-8";
   };
 
+  # Configuración de entrada (fcitx5 para Japonés/Hiragana)
+  i18n.inputMethod = {
+    enable = true;
+    type = "fcitx5";
+    fcitx5.waylandFrontend = true;
+    fcitx5.addons = with pkgs; [
+      fcitx5-mozc
+      fcitx5-gtk
+    ];
+  };
+
   # Enable the X11 windowing system.
   services.xserver.enable = true;
 
   # Enable the GNOME Desktop Environment.
   services.displayManager.sddm.enable = true;
   #services.xserver.desktopManager.gnome.enable = true;
-  services.displayManager.sddm.wayland.enable = true;
+  services.displayManager.sddm.wayland.enable = false;
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -86,14 +97,17 @@
   users.users.mia = {
     isNormalUser = true;
     description = "mia";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "input" "video" ];
     packages = with pkgs; [
     #  thunderbird
     ];
   };
   # Fonts
   fonts.packages = with pkgs; [
-  meslo-lgs-nf
+    meslo-lgs-nf
+    nerd-fonts.jetbrains-mono
+    nerd-fonts.victor-mono
+    noto-fonts-cjk-sans
   ];
 
 
@@ -113,16 +127,32 @@
 	wget
 	kitty
 	alacritty
+	# mako (Comentado para evitar conflictos con Noctalia)
+	# mako
+	libnotify
 	git
 	fuzzel
 	inputs.zen-browser.packages."x86_64-linux".default
 	vesktop
 	gemini-cli
+    bibata-cursors
+    qt6Packages.fcitx5-configtool
+    spotify
   ];
 
   environment.sessionVariables = {
 	WLR_NO_HARDWARE_CURSORS = "1";
   	NIXOS_OZONE_WL = "1";
+  };
+
+  # XDG Portals
+  xdg.portal = {
+    enable = true;
+    extraPortals = [ 
+      pkgs.xdg-desktop-portal-gnome
+      pkgs.xdg-desktop-portal-gtk
+    ];
+    config.common.default = [ "gnome" "gtk" ];
   };
 
   # Some programs need SUID wrappers, can be configured further or are
