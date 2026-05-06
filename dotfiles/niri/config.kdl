@@ -246,8 +246,8 @@ layout {
 // This line starts waybar, a commonly used bar for Wayland compositors.
 //spawn-at-startup "waybar"
 
-// To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
-// spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"
+// Conditional shell startup
+spawn-sh-at-startup "if [ \"$NIRI_SHELL\" = \"noctalia\" ]; then noctalia; else dms-shell; fi"
 
 hotkey-overlay {
     // Uncomment this line to disable the "Important Hotkeys" pop-up at startup.
@@ -300,6 +300,12 @@ window-rule {
     // - host Firefox (app-id is "firefox")
     // - Flatpak Firefox (app-id is "org.mozilla.firefox")
     match app-id=r#"firefox$"# title="^Picture-in-Picture$"
+    open-floating true
+}
+
+// Noctalia window rules
+window-rule {
+    match app-id="noctalia"
     open-floating true
 }
 

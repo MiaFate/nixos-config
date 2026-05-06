@@ -4,6 +4,7 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ./noctalia.nix
     ];
 
   # Bootloader.
@@ -142,12 +143,10 @@
     pkgs.thunar-volman
   ];
   programs.dms-shell = {
-	enable = true;
-	systemd = {
-		enable = true;
-		restartIfChanged = true;
-	};
-
+        enable = true;
+        systemd = {
+                enable = false;
+        };
 	#core features
 	enableSystemMonitoring = true;
 	enableVPN = true;

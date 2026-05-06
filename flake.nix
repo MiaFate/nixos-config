@@ -15,9 +15,10 @@
       url = "github:youwen5/zen-browser-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    noctalia.url = "github:Noctalia/noctalia";
   };
 
-  outputs = { self, nixpkgs, home-manager, dms, ... }@inputs: {
+  outputs = { self, nixpkgs, home-manager, dms, noctalia, ... }@inputs: {
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
       specialArgs = { inherit inputs; };
       modules = [
