@@ -15,7 +15,7 @@
       url = "github:youwen5/zen-browser-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    noctalia.url = "github:Noctalia/noctalia";
+    noctalia.url = "github:noctalia-dev/noctalia-shell";
   };
 
   outputs = { self, nixpkgs, home-manager, dms, noctalia, ... }@inputs: {

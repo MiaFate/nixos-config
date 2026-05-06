@@ -27,27 +27,29 @@ in
 
   # Registramos ambas sesiones en el Display Manager
   services.displayManager.sessionPackages = [
-    (pkgs.writeTextFile {
-      name = "niri-dank-session";
-      destination = "/share/wayland-sessions/niri-dank.desktop";
-      content = ''
-        [Desktop Entry]
-        Name=Niri (Dank)
-        Comment=Niri with Dank Material Shell
-        Exec=${niri-dank}/bin/niri-dank
-        Type=Application
-      '';
-    })
-    (pkgs.writeTextFile {
-      name = "niri-noctalia-session";
-      destination = "/share/wayland-sessions/niri-noctalia.desktop";
-      content = ''
-        [Desktop Entry]
-        Name=Niri (Noctalia)
-        Comment=Niri with Noctalia Shell
-        Exec=${niri-noctalia}/bin/niri-noctalia
-        Type=Application
-      '';
-    })
+    (pkgs.runCommand "niri-dank-session" {
+      passthru.providedSessions = [ "niri-dank" ];
+    } ''
+      mkdir -p $out/share/wayland-sessions
+      cat <<EOF > $out/share/wayland-sessions/niri-dank.desktop
+[Desktop Entry]
+Name=Niri (Dank)
+Comment=Niri with Dank Material Shell
+Exec=${niri-dank}/bin/niri-dank
+Type=Application
+EOF
+    '')
+    (pkgs.runCommand "niri-noctalia-session" {
+      passthru.providedSessions = [ "niri-noctalia" ];
+    } ''
+      mkdir -p $out/share/wayland-sessions
+      cat <<EOF > $out/share/wayland-sessions/niri-noctalia.desktop
+[Desktop Entry]
+Name=Niri (Noctalia)
+Comment=Niri with Noctalia Shell
+Exec=${niri-noctalia}/bin/niri-noctalia
+Type=Application
+EOF
+    '')
   ];
 }
