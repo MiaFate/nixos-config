@@ -6,6 +6,11 @@
 // Input device configuration.
 // Find the full list of options on the wiki:
 // https://niri-wm.github.io/niri/Configuration:-Input
+
+environment {
+    XDG_CURRENT_DESKTOP "niri:GNOME"
+}
+
 prefer-no-csd
 input {
     keyboard {
@@ -243,7 +248,7 @@ layout {
 
 // This line starts waybar, a commonly used bar for Wayland compositors.
 //spawn-at-startup "waybar"
-spawn-at-startup "dbus-update-activation-environment" "--systemd" "WAYLAND_DISPLAY" "XDG_CURRENT_DESKTOP" "NIRI_SHELL"
+spawn-at-startup "dbus-update-activation-environment" "--systemd" "WAYLAND_DISPLAY" "XDG_CURRENT_DESKTOP" "XDG_SESSION_TYPE" "NIRI_SHELL"
 spawn-sh-at-startup "if [ \"$NIRI_SHELL\" != \"noctalia\" ]; then mako; fi"
 spawn-at-startup "fcitx5" "-d"
 spawn-at-startup "systemctl" "--user" "start" "polkit-gnome-authentication-agent-1.service"
