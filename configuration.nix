@@ -52,13 +52,28 @@
     ];
   };
 
+  # Variables de entorno para Wayland/Niri y Fcitx5
+  environment.variables = {
+    GTK_IM_MODULE = "fcitx";
+    QT_IM_MODULE = "fcitx";
+    XMODIFIERS = "@im=fcitx";
+  };
+
   # Enable the X11 windowing system.
   services.xserver.enable = true;
 
-  # Enable the GNOME Desktop Environment.
-  services.displayManager.sddm.enable = true;
-  #services.xserver.desktopManager.gnome.enable = true;
-  services.displayManager.sddm.wayland.enable = false;
+  # SDDM Configuration
+  services.displayManager.sddm = {
+    enable = true;
+    wayland.enable = true;
+    package = pkgs.kdePackages.sddm;
+    theme = "simple-sddm-2";
+    extraPackages = with pkgs; [
+      kdePackages.qtsvg
+      kdePackages.qtmultimedia
+      kdePackages.qtvirtualkeyboard
+    ];
+  };
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -72,6 +87,7 @@
   # Enable CUPS to print documents.
   services.printing.enable = true;
   services.gvfs.enable = true; # Soporte para papelera y montaje de discos
+  services.udisks2.enable = true; # Manejo de discos sin root
   services.tumbler.enable = true; # Soporte para miniaturas
 
   # Enable sound with pipewire.
@@ -82,34 +98,25 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
-
-    # use the example session manager (no others are packaged yet so this is enabled by default,
-    # no need to redefine it in your config for now)
-    #media-session.enable = true;
   };
 
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
+  # Define a user account.
   users.users.mia = {
     isNormalUser = true;
     description = "mia";
     extraGroups = [ "networkmanager" "wheel" "input" "video" ];
-    packages = with pkgs; [
-    #  thunderbird
-    ];
+    shell = pkgs.zsh;
   };
+
   # Fonts
   fonts.packages = with pkgs; [
     meslo-lgs-nf
     nerd-fonts.jetbrains-mono
     nerd-fonts.victor-mono
     noto-fonts-cjk-sans
+    # Apple Fonts (SF Pro) from flake input
+    inputs.apple-fonts.packages.${pkgs.stdenv.hostPlatform.system}.sf-pro
   ];
-
 
   # Install firefox.
   programs.firefox.enable = true;
@@ -117,18 +124,14 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
+  # List packages installed in system profile.
   environment.systemPackages = with pkgs; [
-  #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  #  wget
+    (callPackage ./sddm-theme.nix {})
   	vim
 	neovim
 	wget
 	kitty
 	alacritty
-	# mako (Comentado para evitar conflictos con Noctalia)
-	# mako
 	libnotify
 	git
 	fuzzel
@@ -138,6 +141,7 @@
     bibata-cursors
     qt6Packages.fcitx5-configtool
     spotify
+    google-chrome
   ];
 
   environment.sessionVariables = {
@@ -155,15 +159,9 @@
     config.common.default = [ "gnome" "gtk" ];
   };
 
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
+  # Programs and services
   programs.ssh.startAgent = true;
   services.gnome.gcr-ssh-agent.enable = false;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
   programs.niri.enable = true;
   security.polkit.enable = true;
   services.devmon.enable = true;
@@ -172,45 +170,23 @@
     pkgs.thunar-archive-plugin
     pkgs.thunar-volman
   ];
+
   programs.dms-shell = {
-        enable = true;
-        systemd = {
-                enable = false;
-        };
-	#core features
+    enable = true;
+    systemd.enable = false;
 	enableSystemMonitoring = true;
 	enableVPN = true;
 	enableDynamicTheming = true;
 	enableAudioWavelength = false;
 	enableCalendarEvents = false;
 	enableClipboardPaste = true;
-
-
   };
 
   programs.zsh.enable = true;
-  users.extraUsers.mia = {
-        shell = pkgs.zsh;
-  };
 
-  # List services that you want to enable:
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
   # habilita flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
-
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "25.11"; # Did you read the comment?
+  system.stateVersion = "25.11";
 
 }
