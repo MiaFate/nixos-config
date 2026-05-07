@@ -6,7 +6,10 @@ let
     export XDG_SESSION_TYPE=wayland
     export XDG_CURRENT_DESKTOP=niri
     export NIRI_SHELL=dank
-    exec niri
+    export XMODIFIERS=@im=fcitx
+    export GTK_IM_MODULE=wayland
+    export QT_IM_MODULE=fcitx
+    exec niri-session
   '';
 
   # Wrapper para Niri + Noctalia
@@ -14,13 +17,17 @@ let
     export XDG_SESSION_TYPE=wayland
     export XDG_CURRENT_DESKTOP=niri
     export NIRI_SHELL=noctalia
-    exec niri
+    export XMODIFIERS=@im=fcitx
+    export GTK_IM_MODULE=wayland
+    export QT_IM_MODULE=fcitx
+    exec niri-session
   '';
 in
 {
   # Añadimos los paquetes y wrappers al sistema
   environment.systemPackages = [
-    inputs.noctalia.packages.${pkgs.system}.default
+    inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default
+    pkgs.libnotify
     niri-dank
     niri-noctalia
   ];
@@ -33,7 +40,7 @@ in
       mkdir -p $out/share/wayland-sessions
       cat <<EOF > $out/share/wayland-sessions/niri-dank.desktop
 [Desktop Entry]
-Name=Niri (Dank)
+Name=DMS Shell + Niri
 Comment=Niri with Dank Material Shell
 Exec=${niri-dank}/bin/niri-dank
 Type=Application
@@ -45,7 +52,7 @@ EOF
       mkdir -p $out/share/wayland-sessions
       cat <<EOF > $out/share/wayland-sessions/niri-noctalia.desktop
 [Desktop Entry]
-Name=Niri (Noctalia)
+Name=NOCTALIA + Niri (Experimental)
 Comment=Niri with Noctalia Shell
 Exec=${niri-noctalia}/bin/niri-noctalia
 Type=Application

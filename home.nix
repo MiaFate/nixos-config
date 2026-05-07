@@ -4,11 +4,10 @@
   home.username = "mia";
   home.homeDirectory = "/home/mia";
 
-  # Enlaces a archivos de configuración
+  # Enlaces a archivos de configuración (Editables para DMS)
   xdg.configFile = {
-    "niri".source = ./dotfiles/niri;
-    "kitty".source = ./dotfiles/kitty;
-    "nvim".source = ./dotfiles/nvim;
+    "niri".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/niri";
+    "nvim".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/nvim";
   };
 
   home.file = {
@@ -19,8 +18,115 @@
   # Paquetes de usuario
   home.packages = with pkgs; [
     zsh-powerlevel10k
-    # Puedes mover paquetes de systemPackages aquí si son solo para tu usuario
+    gnome-themes-extra
+    adwaita-qt
+    bibata-cursors
+    nerd-fonts.jetbrains-mono
   ];
+
+  home.pointerCursor = {
+    name = "Bibata-Modern-Ice";
+    package = pkgs.bibata-cursors;
+    size = 24;
+    gtk.enable = true;
+    x11.enable = true;
+  };
+
+  # Configuración de GTK y Modo Oscuro
+  gtk = {
+    enable = true;
+    font = {
+      name = "SF Pro Display";
+      size = 12;
+    };
+    theme = {
+      name = "Adwaita-dark";
+      package = pkgs.gnome-themes-extra;
+    };
+    gtk3.extraConfig = {
+      gtk-application-prefer-dark-theme = 1;
+    };
+    gtk4.extraConfig = {
+      gtk-application-prefer-dark-theme = 1;
+    };
+    gtk4.theme = config.gtk.theme;
+  };
+
+  # Bloqueo de pantalla y gestión de inactividad
+  services.hypridle = {
+    enable = true;
+    settings = {
+      general = {
+        lock_cmd = "pidof hyprlock || hyprlock";
+        before_sleep_cmd = "loginctl lock-session";
+      };
+      listener = [
+        {
+          timeout = 300;
+          on-timeout = "loginctl lock-session";
+        }
+      ];
+    };
+  };
+
+  programs.hyprlock = {
+    enable = true;
+    settings = {
+      general = {
+        disable_loading = true;
+        grace = 0;
+        hide_cursor = true;
+      };
+      background = [
+        {
+          path = "/home/mia/Pictures/Wallpapers/Anime-Girl-Night-Sky.jpg";
+          blur_passes = 3;
+          blur_size = 7;
+        }
+      ];
+      input-field = [
+        {
+          size = "200, 50";
+          outline_thickness = 3;
+          dots_size = 0.33;
+          dots_spacing = 0.15;
+          dots_center = true;
+          outer_color = "rgb(127, 91, 204)";
+          inner_color = "rgb(30, 30, 46)";
+          font_color = "rgb(205, 214, 244)";
+          fade_on_empty = true;
+          placeholder_text = "<i>Contraseña...</i>";
+          hide_input = false;
+          position = "0, -20";
+          halign = "center";
+          valign = "center";
+        }
+      ];
+      label = [
+        {
+          text = "$TIME";
+          color = "rgb(205, 214, 244)";
+          font_size = 64;
+          font_family = "SF Pro Display Bold";
+          position = "0, 80";
+          halign = "center";
+          valign = "center";
+        }
+      ];
+    };
+  };
+
+  dconf.settings = {
+    "org/gnome/desktop/interface" = {
+      color-scheme = "prefer-dark";
+    };
+  };
+
+  qt = {
+    enable = true;
+    platformTheme.name = "adwaita";
+    style.name = "adwaita-dark";
+  };
 
   # Configuración de Zsh vía Home Manager
   programs.zsh = {
@@ -30,7 +136,6 @@
       enable = true;
       plugins = [ "git" "z" ];
       custom = "$HOME/.oh-my-zsh/custom";
-      # Desactivamos el tema aquí para cargarlo manualmente vía Nix
     };
     initContent = ''
       # Cargar Powerlevel10k desde el Nix Store
@@ -39,6 +144,23 @@
       # Cargar p10k config si existe
       [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
     '';
+  };
+
+  programs.kitty = {
+    enable = true;
+    themeFile = "Catppuccin-Mocha";
+    font = {
+      name = "MesloLGS NF";
+      size = 12;
+    };
+    settings = {
+      background_opacity = "0.9";
+      dynamic_background_opacity = "yes";
+      confirm_os_window_close = 0;
+      cursor_trail = 1;
+      enable_audio_bell = "no";
+      window_padding_width = 4;
+    };
   };
 
   programs.home-manager.enable = true;

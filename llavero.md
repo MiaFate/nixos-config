@@ -1,0 +1,3 @@
+WARNING
+
+Importante: Para que el desbloqueo automático funcione, la contraseña del llavero debe ser exactamente la misma que tu contraseña de usuario. Si en algún momento una ventana te pide crear una contraseña para el "Default Keyring" o "Login", asegúrate de poner la misma contraseña que usas para iniciar sesión en tu PC. Si luego de este reinicio sigue fallando, abre la nueva aplicación Contraseñas y claves (Seahorse) que se instalará, haz clic derecho sobre el llavero "Inicio de sesión" (o Login), elimínalo y vuelve a iniciar sesión en Antigravity para que se cree uno nuevo correctamente sincronizado.
