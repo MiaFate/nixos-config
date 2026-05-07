@@ -1,14 +1,17 @@
 # Dummy comment to force rebuild
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   home.username = "mia";
   home.homeDirectory = "/home/mia";
 
+  imports = [
+    ./neovim.nix
+  ];
+
   # Enlaces a archivos de configuración (Editables para DMS)
   xdg.configFile = {
     "niri".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/niri";
-    "nvim".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/nvim";
   };
 
   home.file = {
@@ -23,6 +26,20 @@
     adwaita-qt
     bibata-cursors
     nerd-fonts.jetbrains-mono
+    # vim # Gestionado por programs.neovim
+    # neovim # Gestionado por programs.neovim
+    alacritty
+    fuzzel
+    vesktop
+    spotify
+    google-chrome
+    kdePackages.dolphin
+    obs-studio
+    mpv
+    qt6Packages.fcitx5-configtool
+    inputs.zen-browser.packages."x86_64-linux".default
+    (vscode.override { commandLineArgs = "--password-store=gnome-libsecret"; })
+    (antigravity.override { commandLineArgs = "--password-store=gnome-libsecret"; })
   ];
 
   home.pointerCursor = {
