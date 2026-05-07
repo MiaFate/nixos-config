@@ -175,6 +175,11 @@
     (vscode.override { commandLineArgs = "--password-store=gnome"; })
     (antigravity.override { commandLineArgs = "--password-store=gnome"; })
     libsecret
+    obs-studio
+    wl-clipboard
+    pavucontrol
+    btop
+    mpv
   ];
 
   environment.sessionVariables = {
