@@ -15,13 +15,11 @@
   };
 
   home.file = {
-    ".p10k.zsh".source = ./dotfiles/p10k.zsh;
     "GEMINI.md".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/GEMINI.md";
   };
 
   # Paquetes de usuario
   home.packages = with pkgs; [
-    zsh-powerlevel10k
     gnome-themes-extra
     adwaita-qt
     bibata-cursors
@@ -155,13 +153,13 @@
       plugins = [ "git" "z" ];
       custom = "$HOME/.oh-my-zsh/custom";
     };
-    initContent = ''
-      # Cargar Powerlevel10k desde el Nix Store
-      source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
+  };
 
-      # Cargar p10k config si existe
-      [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-    '';
+  programs.starship = {
+    enable = true;
+    enableZshIntegration = true;
+    enableTransience = true;
+    settings = builtins.fromTOML (builtins.readFile ./dotfiles/starship.toml);
   };
 
   programs.kitty = {
