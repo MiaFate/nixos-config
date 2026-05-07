@@ -14,7 +14,6 @@
   home.file = {
     ".p10k.zsh".source = ./dotfiles/p10k.zsh;
     "GEMINI.md".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/GEMINI.md";
-    ".dummy".text = "Force rebuild";
   };
 
   # Paquetes de usuario
