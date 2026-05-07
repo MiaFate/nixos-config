@@ -155,31 +155,15 @@
   # List packages installed in system profile.
   environment.systemPackages = with pkgs; [
     (callPackage ./sddm-theme.nix {})
-  	vim
-	neovim
-	wget
-	kitty
-	alacritty
-	libnotify
-	git
-	fuzzel
-	inputs.zen-browser.packages."x86_64-linux".default
-	vesktop
-	gemini-cli
-    bibata-cursors
-    qt6Packages.fcitx5-configtool
-    spotify
-    google-chrome
-    kdePackages.dolphin
+    wget
+    libnotify
+    git
+    gemini-cli
     polkit_gnome
-    (vscode.override { commandLineArgs = "--password-store=gnome"; })
-    (antigravity.override { commandLineArgs = "--password-store=gnome"; })
     libsecret
-    obs-studio
     wl-clipboard
     pavucontrol
     btop
-    mpv
   ];
 
   environment.sessionVariables = {
