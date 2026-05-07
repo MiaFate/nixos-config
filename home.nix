@@ -163,6 +163,24 @@
     };
   };
 
+  # Autoinicio de Vesktop vía Systemd (Home Manager)
+  systemd.user.services.vesktop-autostart = {
+    Unit = {
+      Description = "Vesktop Autostart (Declarative)";
+      After = [ "graphical-session.target" ];
+      Wants = [ "graphical-session.target" ];
+    };
+    Install = {
+      WantedBy = [ "graphical-session.target" ];
+    };
+    Service = {
+      Type = "simple";
+      ExecStart = "${pkgs.vesktop}/bin/vesktop --ozone-platform-hint=auto --enable-features=WaylandWindowDecorations --enable-wayland-ime=true";
+      Restart = "on-failure";
+      RestartSec = 5;
+    };
+  };
+
   programs.home-manager.enable = true;
   home.stateVersion = "25.11";
 }

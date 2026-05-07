@@ -255,6 +255,9 @@
 
   programs.zsh.enable = true;
 
+  # ZRAM Swap (Recomendado para evitar congelamientos)
+  zramSwap.enable = true;
+
   # habilita flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
