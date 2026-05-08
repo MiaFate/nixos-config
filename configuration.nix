@@ -65,12 +65,6 @@
     };
   };
 
-  # Variables de entorno para Wayland/Niri y Fcitx5
-  environment.variables = {
-    GTK_IM_MODULE = "fcitx";
-    QT_IM_MODULE = "fcitx";
-    XMODIFIERS = "@im=fcitx";
-  };
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;

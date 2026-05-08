@@ -191,7 +191,7 @@
     };
     Service = {
       Type = "simple";
-      ExecStart = "${pkgs.vesktop}/bin/vesktop --ozone-platform-hint=auto --enable-features=WaylandWindowDecorations --enable-wayland-ime=true";
+      ExecStart = "${pkgs.vesktop}/bin/vesktop";
       Restart = "on-failure";
       RestartSec = 5;
     };
