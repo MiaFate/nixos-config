@@ -38,6 +38,7 @@
     inputs.zen-browser.packages."x86_64-linux".default
     (vscode.override { commandLineArgs = "--password-store=gnome-libsecret"; })
     (antigravity.override { commandLineArgs = "--password-store=gnome-libsecret"; })
+    playerctl
   ];
 
   home.pointerCursor = {
@@ -78,8 +79,12 @@
       };
       listener = [
         {
-          timeout = 300;
+          timeout = 300;          # 5 min → bloquear pantalla
           on-timeout = "loginctl lock-session";
+        }
+        {
+          timeout = 1800;         # 30 min → suspender sistema
+          on-timeout = "systemctl suspend";
         }
       ];
     };

@@ -9,9 +9,22 @@
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.configurationLimit = 10; # Mostrar solo las últimas 10 generaciones
   boot.loader.efi.canTouchEfiVariables = true;
-  #habilitar os prober
-  boot.loader.grub.useOSProber = true;
+
+  # Fix NVMe APST: XPG SPECTRIX S40G tiene firmware buggeado que no soporta APST
+  boot.kernelParams = [ 
+    "nvme_core.default_ps_max_latency_us=0" 
+    "nvidia_drm.modeset=1"
+    "nvidia_drm.fbdev=1"
+  ];
+
+  # Garbage collection automático (limpia generaciones viejas semanalmente)
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 7d";
+  };
 
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -50,7 +63,6 @@
       ignoreUserConfig = true;
       addons = with pkgs; [
         fcitx5-mozc
-        fcitx5-gtk
       ];
       settings.inputMethod = {
         "Groups/0" = {
@@ -77,7 +89,7 @@
 
   hardware.nvidia = {
     modesetting.enable = true;
-    powerManagement.enable = false;
+    powerManagement.enable = true;     # Guarda/restaura VRAM en suspend (fix pantalla negra al resumir)
     powerManagement.finegrained = false;
     open = false;
     nvidiaSettings = true;
@@ -184,6 +196,7 @@
         "org.freedesktop.impl.portal.FileChooser" = [ "gtk" ];
         "org.freedesktop.impl.portal.ScreenCast" = [ "gnome" ];
         "org.freedesktop.impl.portal.Screenshot" = [ "gnome" ];
+        "org.freedesktop.impl.portal.ColorPicker" = [ "gnome" ];
       };
       common = {
         default = [ "gnome" "gtk" ];
@@ -224,6 +237,16 @@
 
 
   programs.zsh.enable = true;
+
+  # Logind: configuración explícita para desktop
+  services.logind.settings.Login = {
+    HandleLidSwitch = "ignore";             # No es laptop
+    HandleLidSwitchExternalPower = "ignore";
+    HandlePowerKey = "poweroff";
+    HandleSuspendKey = "suspend";
+    IdleAction = "ignore";
+    IdleActionSec = "30min";
+  };
 
   # ZRAM Swap (Recomendado para evitar congelamientos)
   zramSwap.enable = true;
