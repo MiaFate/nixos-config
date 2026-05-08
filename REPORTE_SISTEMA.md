@@ -18,7 +18,7 @@ Este reporte confirma el estado óptimo del sistema tras la implementación de l
     - Se verificó que `gnome-themes-extra` solo reside en la configuración de usuario (`home.nix`).
     - **Resultado**: Configuración más limpia y modular.
 
-## 3. Observaciones Menores 🔍
+## 3. Observations Menores 🔍
 
 - **Ruido en DBus**: Persisten algunos avisos de `Ignoring duplicate name`. 
     - **Análisis**: Es un comportamiento esperado en entornos con múltiples portales (GNOME + GTK) y servicios de integración (Keyring, Tumbler). No afecta al rendimiento ni a la estabilidad.
@@ -31,10 +31,11 @@ Este reporte confirma el estado óptimo del sistema tras la implementación de l
 
 - **Fcitx5 vs Niri**: El bug del 100% de CPU ocurre cuando la ventana de candidatos de fcitx5 intenta ser gestionada por el tiling de Niri.
     - **Fix permanente**: La regla de ventana debe usar un único `match` con regex para el App ID. Si se usan múltiples líneas de `match`, Niri las interpreta como un `AND` lógico, lo que causa que la regla falle y el sistema entre en un bucle de foco infinito.
+- **Notificaciones de Noctalia**: Los cambios de canción y capturas de pantalla se manejan como "Media Toasts", lo que significa que son notificaciones efímeras que no se guardan en el historial por diseño, evitando saturarlo.
 
 
 ## Conclusión
 
-El sistema se encuentra en un estado **estable y optimizado**. Se han cerrado todas las discrepancias de configuración identificadas previamente. El entorno está listo para el flujo de trabajo diario o para proceder con la transición a Arch Linux si se desea comparar.
+El sistema se encuentra en un estado **estable, optimizado y verificado**. Se han cerrado todas las discrepancias de configuración identificadas y las funcionalidades de shell (Noctalia) están operando según lo esperado por el usuario.
 
-*Reporte final generado por Antigravity.*
+*Reporte final actualizado por Antigravity.*

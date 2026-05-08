@@ -13,7 +13,7 @@ This workspace is running on **NixOS**.
 - [ ] **Config Migration**: Move user-specific configs (Zsh, programs) from `configuration.nix` to `home.nix`.
 - [x] **Spotify Setup**: Installed official Spotify with Wayland support for notification testing.
 - [x] **Noctalia Setup**: Noctalia is the primary shell. DMS has been removed.
-    - Status: Song notifications from Spotify pending verification. Screenshot notifications need integration.
+    - Status: Song notifications from Spotify and screenshot notifications verified and working.
 - [x] **System Health Check**: Review and execute improvements from [REPORTE_SISTEMA.md](file:///home/mia/nixos-config/REPORTE_SISTEMA.md).
 
 ## Transition Note
