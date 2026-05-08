@@ -170,7 +170,6 @@
     oh-my-zsh = {
       enable = true;
       plugins = [ "git" "z" ];
-      custom = "$HOME/.oh-my-zsh/custom";
     };
   };
 
