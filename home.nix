@@ -167,10 +167,19 @@
   programs.zsh = {
     enable = true;
     syntaxHighlighting.enable = true;
+    shellAliases = {
+      cdi = "zi";
+    };
     oh-my-zsh = {
       enable = true;
       plugins = [ "git" "z" ];
     };
+  };
+
+  programs.zoxide = {
+    enable = true;
+    enableZshIntegration = true;
+    options = [ "--cmd cd" ];
   };
 
   programs.starship = {

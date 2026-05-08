@@ -5,12 +5,13 @@ format = """
 [](bg:#7743d1 fg:#cdd6f4)\
 $directory\
 ${custom.git}\
-${custom.no_git}
+${custom.no_git}\
+$fill\
+[](fg:#cdd6f4)\
+[ 󱑎 $time ](bg:#cdd6f4 fg:#11111b)
 $character"""
 
-right_format = """
-[](fg:#cdd6f4)\
-[ 󱑎 $time ](bg:#cdd6f4 fg:#11111b)"""
+right_format = ""
 
 add_newline = false
 
