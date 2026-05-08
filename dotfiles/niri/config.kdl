@@ -254,7 +254,7 @@ spawn-at-startup "fcitx5" "-d"
 spawn-at-startup "systemctl" "--user" "start" "polkit-gnome-authentication-agent-1.service"
 
 // Conditional shell startup
-spawn-sh-at-startup "if [ \"$NIRI_SHELL\" = \"noctalia\" ]; then noctalia-shell > /tmp/noctalia.log 2>&1; elif [ \"$NIRI_SHELL\" = \"dank\" ]; then dms run > /tmp/dms-shell.log 2>&1; fi"
+spawn-sh-at-startup "if [ \"$NIRI_SHELL\" = \"noctalia\" ]; then noctalia-shell > /tmp/noctalia.log 2>&1; fi"
 
 hotkey-overlay {
     // Uncomment this line to disable the "Important Hotkeys" pop-up at startup.
@@ -310,13 +310,26 @@ window-rule {
     open-floating true
 }
 
-// Noctalia window rules
+// Noctalia window rules (Fixed OR logic)
 window-rule {
-    match app-id=r#"^noctalia.*$"#
-    match app-id=r#"^quickshell.*$"#
+    match app-id=r#"^noctalia.*$|^quickshell.*$"#
     open-floating true
     open-focused false
 }
+
+// Fix: fcitx5 candidate windows must float to avoid a tiling focus loop (100% CPU bug)
+window-rule {
+    match app-id=r#"(?i)fcitx"#
+    open-floating true
+    open-focused false
+}
+
+window-rule {
+    match title=r#"(?i)fcitx"#
+    open-floating true
+    open-focused false
+}
+
 
 // Example: block out two password managers from screen capture.
 // (This example rule is commented out with a "/-" in front.)
@@ -614,6 +627,7 @@ binds {
     // Mod+Shift+Space { switch-layout "prev"; }
 
     Mod+Shift+S { screenshot; }
+    Mod+P { spawn "hyprpicker" "-a"; }
     Ctrl+Print { screenshot-screen; }
     Alt+Print { screenshot-window; }
 
@@ -636,6 +650,4 @@ binds {
     Mod+Shift+P { power-off-monitors; }
 }
 
-include "dms/cursor.kdl"
 
-include "dms/outputs.kdl"

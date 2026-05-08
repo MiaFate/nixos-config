@@ -9,9 +9,22 @@
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.configurationLimit = 10; # Mostrar solo las últimas 10 generaciones
   boot.loader.efi.canTouchEfiVariables = true;
-  #habilitar os prober
-  boot.loader.grub.useOSProber = true;
+
+  # Fix NVMe APST: XPG SPECTRIX S40G tiene firmware buggeado que no soporta APST
+  boot.kernelParams = [ 
+    "nvme_core.default_ps_max_latency_us=0" 
+    "nvidia_drm.modeset=1"
+    "nvidia_drm.fbdev=1"
+  ];
+
+  # Garbage collection automático (limpia generaciones viejas semanalmente)
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 7d";
+  };
 
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -27,7 +40,7 @@
   time.timeZone = "America/Argentina/Buenos_Aires";
 
   # Select internationalisation properties.
-  i18n.defaultLocale = "es_AR.UTF-8";
+  i18n.defaultLocale = "en_US.UTF-8";
 
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "es_AR.UTF-8";
@@ -50,7 +63,6 @@
       ignoreUserConfig = true;
       addons = with pkgs; [
         fcitx5-mozc
-        fcitx5-gtk
       ];
       settings.inputMethod = {
         "Groups/0" = {
@@ -65,12 +77,6 @@
     };
   };
 
-  # Variables de entorno para Wayland/Niri y Fcitx5
-  environment.variables = {
-    GTK_IM_MODULE = "fcitx";
-    QT_IM_MODULE = "fcitx";
-    XMODIFIERS = "@im=fcitx";
-  };
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
@@ -83,7 +89,7 @@
 
   hardware.nvidia = {
     modesetting.enable = true;
-    powerManagement.enable = false;
+    powerManagement.enable = true;     # Guarda/restaura VRAM en suspend (fix pantalla negra al resumir)
     powerManagement.finegrained = false;
     open = false;
     nvidiaSettings = true;
@@ -146,6 +152,15 @@
     inputs.apple-fonts.packages.${pkgs.stdenv.hostPlatform.system}.sf-pro
   ];
 
+  fonts.fontconfig = {
+    enable = true;
+    defaultFonts = {
+      monospace = [ "JetBrainsMono Nerd Font" "MesloLGS NF" ];
+      sansSerif = [ "SF Pro Display" "JetBrainsMono Nerd Font" ];
+      serif = [ "SF Pro Display" "JetBrainsMono Nerd Font" ];
+    };
+  };
+
   # Install firefox.
   programs.firefox.enable = true;
 
@@ -169,11 +184,12 @@
   environment.sessionVariables = {
 	WLR_NO_HARDWARE_CURSORS = "1";
   	NIXOS_OZONE_WL = "1";
-        XDG_CURRENT_DESKTOP = "niri:GNOME";   # Importante para que los portales sepan quién manda
+        XDG_CURRENT_DESKTOP = "niri";   # Simplificado para evitar conflictos de sesión
         XDG_SESSION_TYPE = "wayland";
         GBM_BACKEND = "nvidia-drm";
         __GLX_VENDOR_LIBRARY_NAME = "nvidia";
         LIBVA_DRIVER_NAME = "nvidia";
+        GSK_RENDERER = "gl"; # Fix para xdg-desktop-portal-gnome y color picker en NVIDIA
   };
 
   # XDG Portals
@@ -189,6 +205,7 @@
         "org.freedesktop.impl.portal.FileChooser" = [ "gtk" ];
         "org.freedesktop.impl.portal.ScreenCast" = [ "gnome" ];
         "org.freedesktop.impl.portal.Screenshot" = [ "gnome" ];
+        "org.freedesktop.impl.portal.ColorPicker" = [ "gtk" ];
       };
       common = {
         default = [ "gnome" "gtk" ];
@@ -226,18 +243,19 @@
   };
 };
 
-  programs.dms-shell = {
-    enable = true;
-    systemd.enable = false;
-	enableSystemMonitoring = true;
-	enableVPN = true;
-	enableDynamicTheming = true;
-	enableAudioWavelength = false;
-	enableCalendarEvents = false;
-	enableClipboardPaste = true;
-  };
+
 
   programs.zsh.enable = true;
+
+  # Logind: configuración explícita para desktop
+  services.logind.settings.Login = {
+    HandleLidSwitch = "ignore";             # No es laptop
+    HandleLidSwitchExternalPower = "ignore";
+    HandlePowerKey = "poweroff";
+    HandleSuspendKey = "suspend";
+    IdleAction = "ignore";
+    IdleActionSec = "30min";
+  };
 
   # ZRAM Swap (Recomendado para evitar congelamientos)
   zramSwap.enable = true;

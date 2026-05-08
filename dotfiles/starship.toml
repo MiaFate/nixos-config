@@ -1,0 +1,54 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+format = """
+[  ](bg:#cdd6f4 fg:#11111b)\
+[](bg:#7743d1 fg:#cdd6f4)\
+$directory\
+${custom.git}\
+${custom.no_git}\
+$fill\
+[](fg:#cdd6f4)\
+[ 󱑎 $time ](bg:#cdd6f4 fg:#11111b)
+$character"""
+
+right_format = ""
+
+add_newline = false
+
+[username]
+show_always = false
+style_user = "bg:#cba6f7 fg:#11111b"
+style_root = "bg:#cba6f7 fg:#11111b"
+format = ' $user '
+
+[directory]
+style = "bg:#7743d1 fg:#cdd6f4"
+format = "[  $path ]($style)"
+truncation_length = 3
+truncation_symbol = "…/"
+
+[custom.git]
+when = "git rev-parse --is-inside-work-tree"
+command = '''
+ST=$(git status --porcelain 2>/dev/null)
+BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
+[ "$BRANCH" = "HEAD" ] && BRANCH=$(git rev-parse --short HEAD 2>/dev/null)
+if [ -z "$ST" ]; then BG="166;227;161"; OUT="$BRANCH"; else MOD=$(echo "$ST"|grep -cE "^(M|A|R|C| M| A| R| C)"); DEL=$(echo "$ST"|grep -cE "^(D| D)"); UNT=$(echo "$ST"|grep -c "^??"); CON=$(echo "$ST"|grep -cE "^(UU|AA|DD|AU|UA|UD|DU)"); OUT="$BRANCH"; [ "$CON" -gt 0 ] && OUT="$OUT ═$CON"; [ "$MOD" -gt 0 ] && OUT="$OUT !$MOD"; [ "$UNT" -gt 0 ] && OUT="$OUT ?$UNT"; [ "$DEL" -gt 0 ] && OUT="$OUT ✘$DEL"; if [ "$CON" -gt 0 ]; then BG="250;179;135"; else BG="249;226;175"; fi; fi
+echo -ne "\033[48;2;${BG}m\033[38;2;119;67;209m\033[48;2;${BG}m\033[38;2;17;17;27m 󰊢  ${OUT} \033[0m\033[38;2;${BG}m\033[0m"
+'''
+format = "$output"
+
+[custom.no_git]
+when = "git rev-parse --is-inside-work-tree >/dev/null 2>&1; test $? -ne 0"
+command = "echo -ne '\\033[0m\\033[38;2;119;67;209m\\033[0m'"
+format = "$output"
+
+[time]
+disabled = false
+time_format = "%R"
+style = "bg:#cdd6f4 fg:#11111b"
+format = '$time'
+
+[character]
+success_symbol = "[❯](bold green) "
+error_symbol = "[❯](bold red) "

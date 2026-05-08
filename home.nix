@@ -5,30 +5,36 @@
   home.username = "mia";
   home.homeDirectory = "/home/mia";
 
+  # Forzar zona horaria en la sesión de usuario (corrige el reloj de hyprlock)
+  home.sessionVariables = {
+    TZ = "America/Argentina/Buenos_Aires";
+  };
+  systemd.user.sessionVariables = {
+    TZ = "America/Argentina/Buenos_Aires";
+  };
+
   imports = [
-    ./neovim.nix
+    ./nixvim
   ];
 
-  # Enlaces a archivos de configuración (Editables para DMS)
+  # Enlaces a archivos de configuración (symlink editable)
   xdg.configFile = {
     "niri".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/niri";
   };
 
   home.file = {
-    ".p10k.zsh".source = ./dotfiles/p10k.zsh;
     "GEMINI.md".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/GEMINI.md";
   };
 
   # Paquetes de usuario
   home.packages = with pkgs; [
-    zsh-powerlevel10k
     gnome-themes-extra
     adwaita-qt
     bibata-cursors
     nerd-fonts.jetbrains-mono
     # vim # Gestionado por programs.neovim
     # neovim # Gestionado por programs.neovim
-    alacritty
+     alacritty
     fuzzel
     vesktop
     spotify
@@ -38,8 +44,15 @@
     mpv
     qt6Packages.fcitx5-configtool
     inputs.zen-browser.packages."x86_64-linux".default
-    (vscode.override { commandLineArgs = "--password-store=gnome-libsecret"; })
     (antigravity.override { commandLineArgs = "--password-store=gnome-libsecret"; })
+    playerctl
+    hyprpicker
+    eyedropper
+    grim
+    slurp
+    imagemagick
+    swappy
+    grimblast
   ];
 
   home.pointerCursor = {
@@ -67,7 +80,7 @@
     gtk4.extraConfig = {
       gtk-application-prefer-dark-theme = 1;
     };
-    gtk4.theme = config.gtk.theme;
+    gtk4.theme = null;
   };
 
   # Bloqueo de pantalla y gestión de inactividad
@@ -80,8 +93,12 @@
       };
       listener = [
         {
-          timeout = 300;
+          timeout = 300;          # 5 min → bloquear pantalla
           on-timeout = "loginctl lock-session";
+        }
+        {
+          timeout = 1800;         # 30 min → suspender sistema
+          on-timeout = "systemctl suspend";
         }
       ];
     };
@@ -150,25 +167,33 @@
   programs.zsh = {
     enable = true;
     syntaxHighlighting.enable = true;
+    shellAliases = {
+      cdi = "zi";
+    };
     oh-my-zsh = {
       enable = true;
       plugins = [ "git" "z" ];
-      custom = "$HOME/.oh-my-zsh/custom";
     };
-    initContent = ''
-      # Cargar Powerlevel10k desde el Nix Store
-      source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
+  };
 
-      # Cargar p10k config si existe
-      [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-    '';
+  programs.zoxide = {
+    enable = true;
+    enableZshIntegration = true;
+    options = [ "--cmd cd" ];
+  };
+
+  programs.starship = {
+    enable = true;
+    enableZshIntegration = true;
+    enableTransience = true;
+    settings = builtins.fromTOML (builtins.readFile ./dotfiles/starship.toml);
   };
 
   programs.kitty = {
     enable = true;
     themeFile = "Catppuccin-Mocha";
     font = {
-      name = "MesloLGS NF";
+      name = "JetBrainsMono Nerd Font";
       size = 12;
     };
     settings = {
@@ -177,7 +202,37 @@
       confirm_os_window_close = 0;
       cursor_trail = 1;
       enable_audio_bell = "no";
-      window_padding_width = 4;
+      window_padding_width = 10;
+      
+      # Integración y Control
+      shell_integration = "enabled";
+      allow_remote_control = "yes";
+
+      # Tipografía y Ligaduras
+      disable_ligatures = "never";
+
+      # Layouts
+      enabled_layouts = "splits,stack";
+      
+      # Rendimiento (Optimizado para NVIDIA/Wayland)
+      repaint_delay = 8;
+      input_delay = 2;
+      sync_to_monitor = "yes";
+
+      # Estética de Pestañas (Premium)
+      tab_bar_style = "powerline";
+      tab_powerline_style = "slanted";
+      active_tab_font_style = "bold";
+      inactive_tab_font_style = "normal";
+    };
+    keybindings = {
+      "ctrl+shift+enter" = "launch --location=vsplit --cwd=current";
+      "ctrl+shift+backspace" = "launch --location=hsplit --cwd=current";
+      "ctrl+shift+left" = "neighboring_window left";
+      "ctrl+shift+right" = "neighboring_window right";
+      "ctrl+shift+up" = "neighboring_window up";
+      "ctrl+shift+down" = "neighboring_window down";
+      "ctrl+shift+t" = "new_tab_with_cwd";
     };
   };
 
@@ -193,9 +248,20 @@
     };
     Service = {
       Type = "simple";
-      ExecStart = "${pkgs.vesktop}/bin/vesktop --ozone-platform-hint=auto --enable-features=WaylandWindowDecorations --enable-wayland-ime=true";
+      ExecStart = "${pkgs.vesktop}/bin/vesktop";
+      Environment = "XDG_CURRENT_DESKTOP=niri:GNOME";
       Restart = "on-failure";
       RestartSec = 5;
+    };
+  };
+
+  programs.vscode = {
+    enable = true;
+    package = pkgs.vscode.override { commandLineArgs = "--password-store=gnome-libsecret"; };
+    profiles.default.userSettings = {
+      "editor.fontFamily" = "'JetBrainsMono Nerd Font', 'SF Pro Display', monospace";
+      "terminal.integrated.fontFamily" = "'JetBrainsMono Nerd Font'";
+      "editor.fontLigatures" = true;
     };
   };
 
