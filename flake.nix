@@ -16,9 +16,13 @@
       url = "github:Lyndeno/apple-fonts.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, noctalia, ... }@inputs: {
+  outputs = { self, nixpkgs, home-manager, nixvim, noctalia, ... }@inputs: {
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
       specialArgs = { inherit inputs; };
       modules = [
@@ -27,7 +31,12 @@
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.users.mia = import ./home.nix;
+          home-manager.users.mia = {
+            imports = [ 
+              ./home.nix 
+              nixvim.homeModules.nixvim
+            ];
+          };
           home-manager.extraSpecialArgs = { inherit inputs; };
         }
       ];

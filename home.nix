@@ -14,7 +14,7 @@
   };
 
   imports = [
-    ./neovim.nix
+    ./nixvim
   ];
 
   # Enlaces a archivos de configuración (symlink editable)
