@@ -2,7 +2,14 @@
 
 Todos los cambios significativos, correcciones de errores y decisiones arquitectónicas se registran aquí.
 
+## [2026-05-08] - Corrección Definitiva de Fcitx5
+### Fixed
+- **Fcitx5 CPU Loop (Refined)**: Se amplió la regla de ventana para ser insensible a mayúsculas/minúsculas y capturar por título además de `app-id`.
+    - *Razón*: Algunos wrappers de Nix o cambios en la ventana de candidatos hacían que la regex anterior fallara intermitentemente.
+- **Configuración Live**: Se vinculó manualmente `~/.config/niri` a los dotfiles locales para asegurar que los cambios sean inmediatos sin esperar a un `home-manager switch`.
+
 ## [2026-05-08] - Estabilización y Análisis Post-Instalación
+
 
 ### Fixed
 - **Fcitx5 CPU Loop**: Se corrigió la regla de ventana en Niri (`config.kdl`) que causaba un uso del 99% de CPU.

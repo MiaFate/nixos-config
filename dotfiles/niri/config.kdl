@@ -319,10 +319,17 @@ window-rule {
 
 // Fix: fcitx5 candidate windows must float to avoid a tiling focus loop (100% CPU bug)
 window-rule {
-    match app-id=r#"fcitx"#
+    match app-id=r#"(?i)fcitx"#
     open-floating true
     open-focused false
 }
+
+window-rule {
+    match title=r#"(?i)fcitx"#
+    open-floating true
+    open-focused false
+}
+
 
 // Example: block out two password managers from screen capture.
 // (This example rule is commented out with a "/-" in front.)
