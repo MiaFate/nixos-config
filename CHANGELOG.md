@@ -22,4 +22,11 @@ Todos los cambios significativos, correcciones de errores y decisiones arquitect
 ### Fixed
 - **Vesktop Tray Icon**: Restauración del ícono inyectando la variable de entorno correcta.
 
+## [2026-05-08] - Integración de Copilot en CMP
+### Added
+- **Copilot-CMP**: Integración de las sugerencias de Copilot directamente en el menú de autocompletado (`cmp`).
+
+### Changed
+- **Copilot-Lua**: Se desactivaron las sugerencias nativas (`suggestion.enabled = false`) para evitar colisiones visuales con el menú de `cmp`.
+
 ---

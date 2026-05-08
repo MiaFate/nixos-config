@@ -23,16 +23,7 @@
     copilot-lua = {
       enable = true;
       settings = {
-        suggestion = {
-          enabled = true;
-          auto_trigger = true;
-          keymap = {
-            accept = "<C-l>";
-            next = "<M-]>";
-            prev = "<M-[>";
-            dismiss = "<C-]>";
-          };
-        };
+        suggestion.enabled = false; # Desactivado para evitar conflictos con copilot-cmp
         panel.enabled = false;
       };
     };
@@ -45,7 +36,7 @@
       };
     };
 
-    # Soporte para hilos en Neovim (requerido por algunos plugins)
+    # Soporte para hilos en Neovim
     nvim-nio.enable = true;
   };
 }

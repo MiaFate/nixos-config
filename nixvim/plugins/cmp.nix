@@ -2,6 +2,7 @@
 
 {
   programs.nixvim.plugins = {
+    copilot-cmp.enable = true; # Habilitar la integración con cmp
     cmp-nvim-lsp.enable = true;
     cmp-path.enable = true;
     cmp-buffer.enable = true;
