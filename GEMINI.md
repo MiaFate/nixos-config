@@ -29,5 +29,6 @@ The user is switching to **Arch Linux** to compare setups. A handover document `
 - **Change Management**: Maintain a `CHANGELOG.md` at the root of the repository. Every significant fix, refactor, or feature addition MUST be documented there with the date, the change made, and the rationale/lessons learned.
 ## Critical Gotchas & Knowledge Base
 - **Fcitx5 CPU Loop (Niri)**: Fcitx5 candidate windows MUST be floating and MUST NOT take focus (`open-floating true`, `open-focused false`). 
-    - **IMPORTANT**: In Niri `window-rule` blocks, multiple `match` nodes act as an **AND** condition. DO NOT separate `app-id` matches into multiple lines if you want an **OR** behavior; use a single regex instead (e.g., `match app-id=r#"^fcitx|^org\.fcitx\.Fcitx5$"#`). If the rule doesn't apply, the system will hit 100% CPU usage due to a focus-tiling loop.
+    - **IMPORTANT**: In Niri `window-rule` blocks, multiple `match` nodes act as an **AND** condition. DO NOT separate `app-id` matches into multiple lines if you want an **OR** behavior; use a single regex instead.
+    - **RECOMENDACIÓN**: Usar `match app-id=r#"fcitx"#` para ser lo más inclusivo posible y evitar problemas con mayúsculas/minúsculas o nombres de procesos envueltos (Nix). Si la regla falla, el sistema entrará en un loop de foco al 100% de CPU.
 - **GTK 4 Theming**: Do not set `gtk4.theme` in Home Manager when using `Adwaita-dark`. GTK 4 uses libadwaita and setting a theme path explicitly causes portal errors. Use `dconf` to set `color-scheme = "prefer-dark"`.

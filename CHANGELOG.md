@@ -21,3 +21,12 @@ Todos los cambios significativos, correcciones de errores y decisiones arquitect
 - **Home Manager**: Ajuste de variables de entorno para sincronización de zona horaria (`TZ`).
 
 ---
+
+## [2026-05-08] - Corrección de Reglas de Niri y Fcitx5
+
+### Fixed
+- **Fcitx5 CPU Loop (Regresión)**: Se simplificó la regex de `app-id` en Niri a `r#"fcitx"#` para evitar que la ventana de candidatos sea capturada por el tiling, lo que causaba un loop de foco y 99% de CPU.
+- **Noctalia/Quickshell Rules**: Se corrigió el error de lógica `AND` (múltiples `match`) unificando los IDs en una sola regex `OR`.
+- **Estabilidad**: Verificado el uso de CPU al 0.0% tras la recarga y reinicio del servicio.
+
+---

@@ -310,17 +310,16 @@ window-rule {
     open-floating true
 }
 
-// Noctalia window rules
+// Noctalia window rules (Fixed OR logic)
 window-rule {
-    match app-id=r#"^noctalia.*$"#
-    match app-id=r#"^quickshell.*$"#
+    match app-id=r#"^noctalia.*$|^quickshell.*$"#
     open-floating true
     open-focused false
 }
 
 // Fix: fcitx5 candidate windows must float to avoid a tiling focus loop (100% CPU bug)
 window-rule {
-    match app-id=r#"^fcitx|^org\.fcitx\.Fcitx5$"#
+    match app-id=r#"fcitx"#
     open-floating true
     open-focused false
 }
