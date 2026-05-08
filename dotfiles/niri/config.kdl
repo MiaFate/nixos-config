@@ -320,8 +320,7 @@ window-rule {
 
 // Fix: fcitx5 candidate windows must float to avoid a tiling focus loop (100% CPU bug)
 window-rule {
-    match app-id=r#"^fcitx"#
-    match app-id=r#"^org\.fcitx\.Fcitx5$"#
+    match app-id=r#"^fcitx|^org\.fcitx\.Fcitx5$"#
     open-floating true
     open-focused false
 }

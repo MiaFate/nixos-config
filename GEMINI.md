@@ -14,7 +14,7 @@ This workspace is running on **NixOS**.
 - [x] **Spotify Setup**: Installed official Spotify with Wayland support for notification testing.
 - [x] **Noctalia Setup**: Noctalia is the primary shell. DMS has been removed.
     - Status: Song notifications from Spotify pending verification. Screenshot notifications need integration.
-- [ ] **System Health Check**: Review and execute improvements from [REPORTE_SISTEMA.md](file:///home/mia/nixos-config/REPORTE_SISTEMA.md).
+- [x] **System Health Check**: Review and execute improvements from [REPORTE_SISTEMA.md](file:///home/mia/nixos-config/REPORTE_SISTEMA.md).
 
 ## Transition Note
 The user is switching to **Arch Linux** to compare setups. A handover document `~/nixos-config/SYNC_TO_ARCH.md` has been created to guide the Arch-side agent.
@@ -26,3 +26,8 @@ The user is switching to **Arch Linux** to compare setups. A handover document `
 - **Commit Standards**: Use **Conventional Commits** for all repository changes (e.g., `feat:`, `fix:`, `chore:`, `docs:`).
 - **NixOS Integration**: All system-level changes should be handled via Nix expressions and Flakes.
 - **Niri Awareness**: Consider `niri`'s unique scrolling-tiling behavior for any UI or workflow suggestions.
+- **Change Management**: Maintain a `CHANGELOG.md` at the root of the repository. Every significant fix, refactor, or feature addition MUST be documented there with the date, the change made, and the rationale/lessons learned.
+## Critical Gotchas & Knowledge Base
+- **Fcitx5 CPU Loop (Niri)**: Fcitx5 candidate windows MUST be floating and MUST NOT take focus (`open-floating true`, `open-focused false`). 
+    - **IMPORTANT**: In Niri `window-rule` blocks, multiple `match` nodes act as an **AND** condition. DO NOT separate `app-id` matches into multiple lines if you want an **OR** behavior; use a single regex instead (e.g., `match app-id=r#"^fcitx|^org\.fcitx\.Fcitx5$"#`). If the rule doesn't apply, the system will hit 100% CPU usage due to a focus-tiling loop.
+- **GTK 4 Theming**: Do not set `gtk4.theme` in Home Manager when using `Adwaita-dark`. GTK 4 uses libadwaita and setting a theme path explicitly causes portal errors. Use `dconf` to set `color-scheme = "prefer-dark"`.
