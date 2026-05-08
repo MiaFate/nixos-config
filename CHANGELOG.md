@@ -2,6 +2,11 @@
 
 Todos los cambios significativos, correcciones de errores y decisiones arquitectónicas se registran aquí.
 
+## [2026-05-08] - Corrección de System Tray para Vesktop
+### Fixed
+- **Vesktop Tray Icon**: Se restauró el ícono del system tray inyectando `XDG_CURRENT_DESKTOP=niri:GNOME` específicamente en el servicio de autostart de Vesktop.
+    - *Razón*: Al simplificar la variable global a solo `niri`, Electron perdía la capacidad de detectar el soporte de StatusNotifierItem.
+
 ## [2026-05-08] - Corrección Definitiva de Fcitx5
 ### Fixed
 - **Fcitx5 CPU Loop (Refined)**: Se amplió la regla de ventana para ser insensible a mayúsculas/minúsculas y capturar por título además de `app-id`.

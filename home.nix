@@ -212,6 +212,7 @@
     Service = {
       Type = "simple";
       ExecStart = "${pkgs.vesktop}/bin/vesktop";
+      Environment = "XDG_CURRENT_DESKTOP=niri:GNOME";
       Restart = "on-failure";
       RestartSec = 5;
     };
