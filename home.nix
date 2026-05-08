@@ -34,7 +34,7 @@
     nerd-fonts.jetbrains-mono
     # vim # Gestionado por programs.neovim
     # neovim # Gestionado por programs.neovim
-    alacritty
+     alacritty
     fuzzel
     vesktop
     spotify
@@ -44,7 +44,6 @@
     mpv
     qt6Packages.fcitx5-configtool
     inputs.zen-browser.packages."x86_64-linux".default
-    (vscode.override { commandLineArgs = "--password-store=gnome-libsecret"; })
     (antigravity.override { commandLineArgs = "--password-store=gnome-libsecret"; })
     playerctl
     hyprpicker
@@ -245,6 +244,16 @@
       Environment = "XDG_CURRENT_DESKTOP=niri:GNOME";
       Restart = "on-failure";
       RestartSec = 5;
+    };
+  };
+
+  programs.vscode = {
+    enable = true;
+    package = pkgs.vscode.override { commandLineArgs = "--password-store=gnome-libsecret"; };
+    profiles.default.userSettings = {
+      "editor.fontFamily" = "'JetBrainsMono Nerd Font', 'SF Pro Display', monospace";
+      "terminal.integrated.fontFamily" = "'JetBrainsMono Nerd Font'";
+      "editor.fontLigatures" = true;
     };
   };
 

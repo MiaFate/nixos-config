@@ -2,6 +2,11 @@
 
 Todos los cambios significativos, correcciones de errores y decisiones arquitectónicas se registran aquí.
 
+## [2026-05-08] - Mejora de Fuentes y Configuración Declarativa de VSCode
+### Added
+- **Configuración Declarativa de VSCode**: Se movió la configuración de VSCode a `programs.vscode` en `home.nix`, permitiendo gestionar fuentes y ligaduras de forma declarativa.
+- **Fontconfig Global**: Se establecieron fuentes predeterminadas (JetBrainsMono Nerd Font y SF Pro Display) en `configuration.nix` para mejorar la consistencia visual del sistema.
+
 ## [2026-05-08] - Corrección de System Tray para Vesktop
 ### Fixed
 - **Vesktop Tray Icon**: Se restauró el ícono del system tray inyectando `XDG_CURRENT_DESKTOP=niri:GNOME` específicamente en el servicio de autostart de Vesktop.

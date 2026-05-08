@@ -152,6 +152,15 @@
     inputs.apple-fonts.packages.${pkgs.stdenv.hostPlatform.system}.sf-pro
   ];
 
+  fonts.fontconfig = {
+    enable = true;
+    defaultFonts = {
+      monospace = [ "JetBrainsMono Nerd Font" "MesloLGS NF" ];
+      sansSerif = [ "SF Pro Display" "JetBrainsMono Nerd Font" ];
+      serif = [ "SF Pro Display" "JetBrainsMono Nerd Font" ];
+    };
+  };
+
   # Install firefox.
   programs.firefox.enable = true;
 
