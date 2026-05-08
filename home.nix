@@ -186,7 +186,7 @@
     enable = true;
     themeFile = "Catppuccin-Mocha";
     font = {
-      name = "MesloLGS NF";
+      name = "JetBrainsMono Nerd Font";
       size = 12;
     };
     settings = {
@@ -195,7 +195,37 @@
       confirm_os_window_close = 0;
       cursor_trail = 1;
       enable_audio_bell = "no";
-      window_padding_width = 4;
+      window_padding_width = 10;
+      
+      # Integración y Control
+      shell_integration = "enabled";
+      allow_remote_control = "yes";
+
+      # Tipografía y Ligaduras
+      disable_ligatures = "never";
+
+      # Layouts
+      enabled_layouts = "splits,stack";
+      
+      # Rendimiento (Optimizado para NVIDIA/Wayland)
+      repaint_delay = 8;
+      input_delay = 2;
+      sync_to_monitor = "yes";
+
+      # Estética de Pestañas (Premium)
+      tab_bar_style = "powerline";
+      tab_powerline_style = "slanted";
+      active_tab_font_style = "bold";
+      inactive_tab_font_style = "normal";
+    };
+    keybindings = {
+      "ctrl+shift+enter" = "launch --location=vsplit --cwd=current";
+      "ctrl+shift+backspace" = "launch --location=hsplit --cwd=current";
+      "ctrl+shift+left" = "neighboring_window left";
+      "ctrl+shift+right" = "neighboring_window right";
+      "ctrl+shift+up" = "neighboring_window up";
+      "ctrl+shift+down" = "neighboring_window down";
+      "ctrl+shift+t" = "new_tab_with_cwd";
     };
   };
 

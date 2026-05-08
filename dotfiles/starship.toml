@@ -10,7 +10,7 @@ $character"""
 
 right_format = """
 [](fg:#cdd6f4)\
-[ 🤍 $time ](bg:#cdd6f4 fg:#11111b)"""
+[ 󱑎 $time ](bg:#cdd6f4 fg:#11111b)"""
 
 add_newline = false
 
