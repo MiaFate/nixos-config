@@ -39,6 +39,13 @@
     (vscode.override { commandLineArgs = "--password-store=gnome-libsecret"; })
     (antigravity.override { commandLineArgs = "--password-store=gnome-libsecret"; })
     playerctl
+    hyprpicker
+    eyedropper
+    grim
+    slurp
+    imagemagick
+    swappy
+    grimblast
   ];
 
   home.pointerCursor = {

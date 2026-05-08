@@ -622,6 +622,7 @@ binds {
     // Mod+Shift+Space { switch-layout "prev"; }
 
     Mod+Shift+S { screenshot; }
+    Mod+P { spawn "hyprpicker" "-a"; }
     Ctrl+Print { screenshot-screen; }
     Alt+Print { screenshot-window; }
 
