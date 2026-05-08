@@ -14,6 +14,7 @@ This workspace is running on **NixOS**.
 - [x] **Spotify Setup**: Installed official Spotify with Wayland support for notification testing.
 - [x] **Noctalia Setup**: Noctalia is the primary shell. DMS has been removed.
     - Status: Song notifications from Spotify pending verification. Screenshot notifications need integration.
+- [ ] **System Health Check**: Review and execute improvements from [REPORTE_SISTEMA.md](file:///home/mia/nixos-config/REPORTE_SISTEMA.md).
 
 ## Transition Note
 The user is switching to **Arch Linux** to compare setups. A handover document `~/nixos-config/SYNC_TO_ARCH.md` has been created to guide the Arch-side agent.

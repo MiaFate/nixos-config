@@ -5,6 +5,14 @@
   home.username = "mia";
   home.homeDirectory = "/home/mia";
 
+  # Forzar zona horaria en la sesión de usuario (corrige el reloj de hyprlock)
+  home.sessionVariables = {
+    TZ = "America/Argentina/Buenos_Aires";
+  };
+  systemd.user.sessionVariables = {
+    TZ = "America/Argentina/Buenos_Aires";
+  };
+
   imports = [
     ./neovim.nix
   ];
@@ -73,7 +81,7 @@
     gtk4.extraConfig = {
       gtk-application-prefer-dark-theme = 1;
     };
-    gtk4.theme = config.gtk.theme;
+    gtk4.theme = null;
   };
 
   # Bloqueo de pantalla y gestión de inactividad

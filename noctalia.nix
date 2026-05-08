@@ -4,7 +4,7 @@ let
   # Wrapper para Niri + Noctalia
   niri-noctalia = pkgs.writeShellScriptBin "niri-noctalia" ''
     export XDG_SESSION_TYPE=wayland
-    export XDG_CURRENT_DESKTOP=niri
+    export XDG_CURRENT_DESKTOP=niri:GNOME
     export NIRI_SHELL=noctalia
     export XMODIFIERS=@im=fcitx
     export GTK_IM_MODULE=wayland
