@@ -221,16 +221,7 @@
   };
 };
 
-  programs.dms-shell = {
-    enable = true;
-    systemd.enable = false;
-	enableSystemMonitoring = true;
-	enableVPN = true;
-	enableDynamicTheming = true;
-	enableAudioWavelength = false;
-	enableCalendarEvents = false;
-	enableClipboardPaste = true;
-  };
+
 
   programs.zsh.enable = true;
 

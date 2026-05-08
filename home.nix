@@ -9,7 +9,7 @@
     ./neovim.nix
   ];
 
-  # Enlaces a archivos de configuración (Editables para DMS)
+  # Enlaces a archivos de configuración (symlink editable)
   xdg.configFile = {
     "niri".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/niri";
   };

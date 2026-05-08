@@ -5,13 +5,14 @@ This workspace is running on **NixOS**.
 ## Environment Details
 - **Nix Flakes**: The system uses Nix Flakes for configuration management.
 - **Window Manager**: **niri** (a scrollable-tiling Wayland compositor).
+- **Shell**: **Noctalia** (primary shell bar/notifications, DMS removed).
 - **Status**: The system is recently installed.
 
 ## Pending Tasks
 - [x] **Dotfiles Setup**: Initialized modular Flake + Home Manager structure in `~/nixos-config`.
 - [ ] **Config Migration**: Move user-specific configs (Zsh, programs) from `configuration.nix` to `home.nix`.
 - [x] **Spotify Setup**: Installed official Spotify with Wayland support for notification testing.
-- [ ] **Noctalia Experiment**: Verify the new "Niri (Noctalia)" session.
+- [x] **Noctalia Setup**: Noctalia is the primary shell. DMS has been removed.
     - Status: Song notifications from Spotify pending verification. Screenshot notifications need integration.
 
 ## Transition Note

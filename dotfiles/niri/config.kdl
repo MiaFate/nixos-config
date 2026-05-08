@@ -254,7 +254,7 @@ spawn-at-startup "fcitx5" "-d"
 spawn-at-startup "systemctl" "--user" "start" "polkit-gnome-authentication-agent-1.service"
 
 // Conditional shell startup
-spawn-sh-at-startup "if [ \"$NIRI_SHELL\" = \"noctalia\" ]; then noctalia-shell > /tmp/noctalia.log 2>&1; elif [ \"$NIRI_SHELL\" = \"dank\" ]; then dms run > /tmp/dms-shell.log 2>&1; fi"
+spawn-sh-at-startup "if [ \"$NIRI_SHELL\" = \"noctalia\" ]; then noctalia-shell > /tmp/noctalia.log 2>&1; fi"
 
 hotkey-overlay {
     // Uncomment this line to disable the "Important Hotkeys" pop-up at startup.
@@ -643,6 +643,4 @@ binds {
     Mod+Shift+P { power-off-monitors; }
 }
 
-include "dms/cursor.kdl"
 
-include "dms/outputs.kdl"
