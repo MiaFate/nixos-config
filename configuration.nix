@@ -137,6 +137,11 @@
     pulse.enable = true;
   };
 
+  # Bluetooth support
+  hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = true;
+  services.blueman.enable = true;
+
   # Define a user account.
   users.users.mia = {
     isNormalUser = true;
