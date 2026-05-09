@@ -9,6 +9,7 @@ Todos los cambios significativos, correcciones de errores y decisiones arquitect
 - **Configuration**: Standardized indentation in `configuration.nix` (tabs to spaces) for better maintainability.
 - **UI**: Increased default font sizes by 1 point (GTK: 13, Kitty: 13, VSCode: 15) for better readability.
 - **UI**: Reverted font size changes back to defaults (GTK: 12, Kitty: 12, VSCode: default) as requested.
+- **Hardware**: Enabled Bluetooth support and added Blueman manager for device control.
 
 ### Changed
 - **Refactor**: Formally marked the user package migration to Home Manager as completed in `PENDING_REFACTOR.md`.
