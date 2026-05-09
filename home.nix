@@ -31,7 +31,7 @@
     gnome-themes-extra
     adwaita-qt
     bibata-cursors
-    nerd-fonts.jetbrains-mono
+    # nerd-fonts.jetbrains-mono # Ya está en configuration.nix
     # vim # Gestionado por programs.neovim
     # neovim # Gestionado por programs.neovim
      alacritty

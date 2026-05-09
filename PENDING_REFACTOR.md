@@ -1,7 +1,7 @@
-# Plan Pendiente: Migración a home.nix
+# Plan Finalizado: Migración a home.nix ✅
 
-Este archivo contiene las instrucciones para migrar los paquetes de usuario desde `configuration.nix` a `home.nix` (arquitectura de Home Manager). 
-**Nota para Gemini / Agente IA:** Cuando la usuaria solicite ejecutar este refactor, lee este archivo y aplica los cambios.
+Este archivo documenta la migración exitosa de los paquetes de usuario desde `configuration.nix` a `home.nix`.
+**Estado:** COMPLETADO. Todos los paquetes de usuario ahora se gestionan de forma declarativa mediante Home Manager.
 
 ## Cambios a realizar en `configuration.nix`
 **Eliminar** los siguientes paquetes de la lista `environment.systemPackages`:

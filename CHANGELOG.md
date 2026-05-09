@@ -2,6 +2,15 @@
 
 Todos los cambios significativos, correcciones de errores y decisiones arquitectónicas se registran aquí.
 
+## [2026-05-09] - System Analysis and Optimization
+### Fixed
+- **Niri Config**: Updated screen lock shortcut (`Super+Alt+L`) to use `hyprlock` instead of `swaylock`, ensuring compatibility with the current system setup.
+- **Home Manager**: Removed redundant `nerd-fonts.jetbrains-mono` declaration in `home.nix` (already provided in `configuration.nix`).
+- **Configuration**: Standardized indentation in `configuration.nix` (tabs to spaces) for better maintainability.
+
+### Changed
+- **Refactor**: Formally marked the user package migration to Home Manager as completed in `PENDING_REFACTOR.md`.
+
 ## [2026-05-09] - Fix Gaming and Steam Startup
 ### Fixed
 - **Steam/X11**: Added `xwayland` and `xwayland-satellite` to system packages to enable X11 application support on Niri.
