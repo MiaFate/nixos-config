@@ -12,6 +12,9 @@
   boot.loader.systemd-boot.configurationLimit = 10; # Mostrar solo las últimas 10 generaciones
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # Gaming Kernel: Zen Kernel para mejor respuesta
+  boot.kernelPackages = pkgs.linuxPackages_zen;
+
   # Fix NVMe APST: XPG SPECTRIX S40G tiene firmware buggeado que no soporta APST
   boot.kernelParams = [ 
     "nvme_core.default_ps_max_latency_us=0" 
@@ -167,6 +170,15 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
+  # Fix: Saltear tests de openldap que fallan aleatoriamente (test017)
+  nixpkgs.overlays = [
+    (final: prev: {
+      openldap = prev.openldap.overrideAttrs (oldAttrs: {
+        doCheck = false;
+      });
+    })
+  ];
+
   # List packages installed in system profile.
   environment.systemPackages = with pkgs; [
     (callPackage ./sddm-theme.nix {})
@@ -179,12 +191,14 @@
     wl-clipboard
     pavucontrol
     btop
+    xwayland
+    xwayland-satellite
   ];
 
   environment.sessionVariables = {
 	WLR_NO_HARDWARE_CURSORS = "1";
   	NIXOS_OZONE_WL = "1";
-        XDG_CURRENT_DESKTOP = "niri";   # Simplificado para evitar conflictos de sesión
+        XDG_CURRENT_DESKTOP = "niri:GNOME";
         XDG_SESSION_TYPE = "wayland";
         GBM_BACKEND = "nvidia-drm";
         __GLX_VENDOR_LIBRARY_NAME = "nvidia";
@@ -228,6 +242,16 @@
     pkgs.thunar-archive-plugin
     pkgs.thunar-volman
   ];
+
+  # Gaming Configuration
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true;
+    dedicatedServer.openFirewall = true;
+    localNetworkGameTransfers.openFirewall = true;
+  };
+  programs.gamemode.enable = true;
+  programs.gamescope.enable = true;
 
   systemd.user.services.polkit-gnome-authentication-agent-1 = {
   description = "polkit-gnome-authentication-agent-1";

@@ -2,6 +2,14 @@
 
 Todos los cambios significativos, correcciones de errores y decisiones arquitectónicas se registran aquí.
 
+## [2026-05-09] - Fix Gaming and Steam Startup
+### Fixed
+- **Steam/X11**: Added `xwayland` and `xwayland-satellite` to system packages to enable X11 application support on Niri.
+- **Environment**: Updated Niri configuration to propagate `DISPLAY` environment variable via D-Bus, fixing Steam startup issues.
+- **GameMode**: Verified `gamemoded` is operational (reported as "inactive" when no game is active, which is expected).
+- **Niri Config**: Fixed syntax error by removing invalid `xwayland` node and restored animation speed (`slowdown 1.0`).
+- **Environment**: Unified `XDG_CURRENT_DESKTOP` to `niri:GNOME` across system and user configurations.
+
 ## [2026-05-08] - Migración Completa a NixVim Modular
 ### Added
 - **NixVim Framework**: Migración de toda la configuración de Neovim a NixVim.

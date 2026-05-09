@@ -11,6 +11,10 @@ environment {
     XDG_CURRENT_DESKTOP "niri:GNOME"
 }
 
+// niri can either use its built-in Xwayland implementation, or xwayland-satellite.
+// Since we installed xwayland-satellite, it will be used if found in PATH.
+
+
 prefer-no-csd
 input {
     keyboard {
@@ -248,9 +252,9 @@ layout {
 
 // This line starts waybar, a commonly used bar for Wayland compositors.
 //spawn-at-startup "waybar"
-spawn-at-startup "dbus-update-activation-environment" "--systemd" "WAYLAND_DISPLAY" "XDG_CURRENT_DESKTOP" "XDG_SESSION_TYPE" "NIRI_SHELL"
+spawn-at-startup "dbus-update-activation-environment" "--systemd" "WAYLAND_DISPLAY" "XDG_CURRENT_DESKTOP" "XDG_SESSION_TYPE" "NIRI_SHELL" "DISPLAY"
 spawn-sh-at-startup "if [ \"$NIRI_SHELL\" != \"noctalia\" ]; then mako; fi"
-spawn-at-startup "fcitx5" "-d"
+// spawn-at-startup "fcitx5" "-d"
 spawn-at-startup "systemctl" "--user" "start" "polkit-gnome-authentication-agent-1.service"
 
 // Conditional shell startup
@@ -284,7 +288,7 @@ animations {
     // off
 
     // Slow down all animations by this factor. Values below 1 speed them up instead.
-     slowdown 3.0
+     slowdown 1.0
 }
 
 // Window rules let you adjust behavior for individual windows.

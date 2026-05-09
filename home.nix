@@ -53,6 +53,13 @@
     imagemagick
     swappy
     grimblast
+
+    # Gaming
+    mangohud
+    protonup-qt
+    heroic
+    lutris
+    bottles
   ];
 
   home.pointerCursor = {
