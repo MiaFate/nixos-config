@@ -75,7 +75,7 @@
     enable = true;
     font = {
       name = "SF Pro Display";
-      size = 12;
+      size = 13;
     };
     theme = {
       name = "Adwaita-dark";
@@ -201,7 +201,7 @@
     themeFile = "Catppuccin-Mocha";
     font = {
       name = "JetBrainsMono Nerd Font";
-      size = 12;
+      size = 13;
     };
     settings = {
       background_opacity = "0.9";
@@ -268,6 +268,7 @@
     profiles.default.userSettings = {
       "editor.fontFamily" = "'JetBrainsMono Nerd Font', 'SF Pro Display', monospace";
       "terminal.integrated.fontFamily" = "'JetBrainsMono Nerd Font'";
+      "editor.fontSize" = 15;
       "editor.fontLigatures" = true;
     };
   };
