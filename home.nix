@@ -41,7 +41,6 @@
     vesktop
     spotify
     google-chrome
-    kdePackages.dolphin
     obs-studio
     mpv
     qt6Packages.fcitx5-configtool
@@ -278,6 +277,13 @@
       "editor.fontFamily" = "'JetBrainsMono Nerd Font', 'SF Pro Display', monospace";
       "terminal.integrated.fontFamily" = "'JetBrainsMono Nerd Font'";
       "editor.fontLigatures" = true;
+    };
+  };
+
+  xdg.mimeApps = {
+    enable = true;
+    defaultApplications = {
+      "inode/directory" = [ "thunar.desktop" ];
     };
   };
 

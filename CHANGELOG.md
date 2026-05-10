@@ -10,6 +10,10 @@ Todos los cambios significativos, correcciones de errores y decisiones arquitect
 ### Added
 - **Optimization**: Enabled `nix.settings.auto-optimise-store = true` to save disk space through hardlinking.
 - **Interactive Search**: Enabled `fzf` and integrated it with Zsh to support `zoxide`'s interactive mode (`zi`), restoring the `cdi` alias functionality.
+- **File Management**: Set Thunar as the global default file manager via `xdg.mimeApps` to ensure consistent behavior across browsers and applications.
+
+### Removed
+- **Redundancy**: Removed Dolphin to reduce D-Bus service duplication and KDE dependency footprint, as Thunar is now correctly configured as the system-wide default.
 
 ### Changed
 - **Zsh Hygiene**: Verified that `initContent` is the new standard for Zsh in NixOS 25.11 (unstable) and retained it after a temporary investigation.
