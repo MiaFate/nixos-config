@@ -2,6 +2,15 @@
 
 Todos los cambios significativos, correcciones de errores y decisiones arquitectónicas se registran aquí.
 
+## [2026-05-10] - Premium Fastfetch Integration
+### Added
+- **Fastfetch Customization**: Integrated a high-end system dashboard with a custom multicolor NixOS logo.
+    - **Logo**: Uses premium Nerd Font glyphs (``, ``, etc.) for smooth diagonal edges and a stylized Reddit-sourced design.
+    - **Palette**: Implemented a 6-color pastel palette (Pink, Peach, Green, Teal, Blue, Purple) via hex codes.
+    - **Layout**: Personalized module list to show core system info, hardware, and uptime while excluding the local IP for privacy.
+    - **Automation**: Enabled autostart in Zsh via `initContent` (fixing deprecation warnings for `initExtra`).
+- **Tools**: Added `chafa` to user packages for improved terminal image and graphics rendering support.
+
 ## [2026-05-10] - Gaming Stability and Audio Fixes
 ### Fixed
 - **THPS 1+2 Freezing**: Identified that the Focusrite Scarlett's 18 channels were causing an infinite loop in GStreamer/Proton. Created a permanent Virtual Stereo Sink in `configuration.nix` to mitigate this.

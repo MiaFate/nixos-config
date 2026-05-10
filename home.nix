@@ -20,6 +20,7 @@
   # Enlaces a archivos de configuración (symlink editable)
   xdg.configFile = {
     "niri".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/niri";
+    "fastfetch".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/fastfetch";
   };
 
   home.file = {
@@ -28,6 +29,7 @@
 
   # Paquetes de usuario
   home.packages = with pkgs; [
+    fastfetch
     gnome-themes-extra
     adwaita-qt
     bibata-cursors
@@ -181,6 +183,9 @@
       enable = true;
       plugins = [ "git" "z" ];
     };
+    initContent = ''
+      fastfetch
+    '';
   };
 
   programs.zoxide = {
