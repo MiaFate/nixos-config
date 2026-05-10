@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, inputs, lib, ... }:
 
 {
   imports =
@@ -28,6 +28,7 @@
     dates = "weekly";
     options = "--delete-older-than 7d";
   };
+  nix.settings.auto-optimise-store = true;
 
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -168,6 +169,8 @@
     };
   };
   services.blueman.enable = true;
+  # Fix: blueman-applet service has multiple ExecStart due to conflict between package and module
+  systemd.user.services.blueman-applet.serviceConfig.ExecStart = lib.mkForce [ "" "${pkgs.blueman}/bin/blueman-applet" ];
 
   # Define a user account.
   users.users.mia = {

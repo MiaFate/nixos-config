@@ -2,6 +2,18 @@
 
 Todos los cambios significativos, correcciones de errores y decisiones arquitectónicas se registran aquí.
 
+## [2026-05-10] - System Optimization and Fixes
+### Fixed
+- **Blueman Applet**: Fixed the `blueman-applet.service` error ("bad-setting") by overriding the multiple `ExecStart` entries using `lib.mkForce`.
+- **Zsh Configuration**: Removed redundant `z` plugin from Oh My Zsh as it was conflicting with `zoxide`.
+
+### Added
+- **Optimization**: Enabled `nix.settings.auto-optimise-store = true` to save disk space through hardlinking.
+- **Interactive Search**: Enabled `fzf` and integrated it with Zsh to support `zoxide`'s interactive mode (`zi`), restoring the `cdi` alias functionality.
+
+### Changed
+- **Zsh Hygiene**: Verified that `initContent` is the new standard for Zsh in NixOS 25.11 (unstable) and retained it after a temporary investigation.
+
 ## [2026-05-10] - Premium Fastfetch Integration
 ### Added
 - **Fastfetch Customization**: Integrated a high-end system dashboard with a custom multicolor NixOS logo.

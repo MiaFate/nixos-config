@@ -1,6 +1,13 @@
-# Reporte de Análisis del Sistema (Final - 2026-05-08)
+# Reporte de Análisis del Sistema (Actualizado - 2026-05-10)
 
-Este reporte confirma el estado óptimo del sistema tras la implementación de las mejoras recomendadas.
+Este reporte confirma el estado del sistema y las mejoras aplicadas tras el análisis exhaustivo de hoy.
+
+## Hallazgos Recientes y Mejoras ✅
+
+- **[FIXED] Blueman Applet**: El servicio de usuario fallaba por tener múltiples `ExecStart`. Se aplicó un override con `lib.mkForce` para limpiar la lista y asegurar que cargue correctamente.
+- **[CLEAN] Redundancia de Zsh**: Se eliminó el plugin `z` de Oh My Zsh. Al usar `zoxide` (vía `programs.zoxide.enableZshIntegration`), el plugin nativo de OMZ era redundante y podía causar lentitud o conflictos menores.
+- **[OPTIMIZED] Nix Store**: Se habilitó `auto-optimise-store`. Esto optimizará el almacenamiento de forma continua al crear enlaces duros entre archivos idénticos en el store.
+- **[VERIFIED] Zsh initContent**: Se verificó que `initContent` es la opción recomendada en las versiones más recientes de NixOS/Home Manager para evitar advertencias de depreciación sobre `initExtra`.
 
 ## 1. Estado General del Sistema ✅
 

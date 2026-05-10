@@ -177,11 +177,10 @@
     enable = true;
     syntaxHighlighting.enable = true;
     shellAliases = {
-      cdi = "zi";
     };
     oh-my-zsh = {
       enable = true;
-      plugins = [ "git" "z" ];
+      plugins = [ "git" ];
     };
     initContent = ''
       fastfetch
@@ -192,6 +191,11 @@
     enable = true;
     enableZshIntegration = true;
     options = [ "--cmd cd" ];
+  };
+
+  programs.fzf = {
+    enable = true;
+    enableZshIntegration = true;
   };
 
   programs.starship = {
