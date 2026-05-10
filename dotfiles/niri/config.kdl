@@ -365,6 +365,19 @@ window-rule {
     default-window-height { fixed 600; }
 }
 
+window-rule {
+    match app-id=r#"^steam$"#
+    open-maximized true
+}
+
+/*
+window-rule {
+    match app-id=r#"THPS12.exe"#
+    open-floating true
+    open-maximized-to-edges true
+}
+*/
+
 binds {
     Mod+Shift+C { spawn "niri" "msg" "action" "load-config-file"; }
     // Keys consist of modifiers separated by + signs, followed by an XKB key name

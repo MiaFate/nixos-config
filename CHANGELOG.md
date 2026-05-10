@@ -2,6 +2,15 @@
 
 Todos los cambios significativos, correcciones de errores y decisiones arquitectónicas se registran aquí.
 
+## [2026-05-10] - Gaming Stability and Audio Fixes
+### Fixed
+- **THPS 1+2 Freezing**: Identified that the Focusrite Scarlett's 18 channels were causing an infinite loop in GStreamer/Proton. Created a permanent Virtual Stereo Sink in `configuration.nix` to mitigate this.
+- **Niri Window Rules**: Added (and temporarily commented) rules for Steam and games to handle maximization and floating states on Wayland/Niri.
+- **DXVK Configuration**: Investigated and implemented `dxvk.conf` tweaks for NVIDIA/Wayland memory management (later removed as the audio fix was the primary cause).
+
+### Added
+- **Documentation**: Created [GAMING_AUDIO_FIX.md](file:///home/mia/nixos-config/GAMING_AUDIO_FIX.md) as a quick reference for the `PULSE_SINK` workaround.
+
 ## [2026-05-09] - System Analysis and Optimization
 ### Fixed
 - **Niri Config**: Updated screen lock shortcut (`Super+Alt+L`) to use `hyprlock` instead of `swaylock`, ensuring compatibility with the current system setup.

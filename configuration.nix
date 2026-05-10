@@ -136,11 +136,37 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
+    extraConfig.pipewire."99-stereo-fix" = {
+      "context.modules" = [
+        {
+          name = "libpipewire-module-loopback";
+          args = {
+            "node.description" = "Stereo Fix (Scarlett)";
+            "capture.props" = {
+              "node.name" = "Stereo-Sink";
+              "media.class" = "Audio/Sink";
+              "audio.position" = [ "FL" "FR" ];
+            };
+            "playback.props" = {
+              "node.name" = "Stereo-Fix-Output";
+              "node.target" = "alsa_output.usb-Focusrite_Scarlett_18i16_4th_Gen_S8RDKD349010A8-00.multichannel-output";
+              "audio.position" = [ "FL" "FR" ];
+            };
+          };
+        }
+      ];
+    };
   };
 
   # Bluetooth support
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
+  hardware.bluetooth.settings = {
+    General = {
+      Experimental = true;
+      UserspaceHID = true;
+    };
+  };
   services.blueman.enable = true;
 
   # Define a user account.
@@ -199,6 +225,8 @@
     btop
     xwayland
     xwayland-satellite
+    usbutils
+    evtest
   ];
 
   environment.sessionVariables = {
@@ -258,6 +286,7 @@
   };
   programs.gamemode.enable = true;
   programs.gamescope.enable = true;
+  hardware.xpadneo.enable = true;
 
   systemd.user.services.polkit-gnome-authentication-agent-1 = {
   description = "polkit-gnome-authentication-agent-1";
