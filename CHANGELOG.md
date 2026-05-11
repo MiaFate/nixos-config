@@ -11,6 +11,7 @@ Todos los cambios significativos, correcciones de errores y decisiones arquitect
 - **Optimization**: Enabled `nix.settings.auto-optimise-store = true` to save disk space through hardlinking.
 - **Interactive Search**: Enabled `fzf` and integrated it with Zsh to support `zoxide`'s interactive mode (`zi`), restoring the `cdi` alias functionality.
 - **File Management**: Set Thunar as the global default file manager via `xdg.mimeApps` to ensure consistent behavior across browsers and applications.
+- **Visuals**: Implemented a refined macOS-inspired aesthetic using `WhiteSur-Dark-Purple` for GTK and `Colloid-Purple-Dark` for icons, aligning with the Catppuccin Lavender color scheme.
 
 ### Removed
 - **Redundancy**: Removed Dolphin to reduce D-Bus service duplication and KDE dependency footprint, as Thunar is now correctly configured as the system-wide default.

@@ -45,6 +45,8 @@
     mpv
     qt6Packages.fcitx5-configtool
     inputs.zen-browser.packages."x86_64-linux".default
+    (whitesur-gtk-theme.override { themeVariants = ["pink"]; })
+    (colloid-icon-theme.override { colorVariants = ["pink"]; })
     (antigravity.override { commandLineArgs = "--password-store=gnome-libsecret"; })
     playerctl
     hyprpicker
@@ -79,8 +81,12 @@
       size = 12;
     };
     theme = {
-      name = "Adwaita-dark";
-      package = pkgs.gnome-themes-extra;
+      name = "WhiteSur-Dark-pink";
+      package = (pkgs.whitesur-gtk-theme.override { themeVariants = ["pink"]; });
+    };
+    iconTheme = {
+      name = "Colloid-Pink-Dark";
+      package = pkgs.colloid-icon-theme.override { colorVariants = ["pink"]; };
     };
     gtk3.extraConfig = {
       gtk-application-prefer-dark-theme = 1;
