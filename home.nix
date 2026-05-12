@@ -227,6 +227,7 @@
     enable = true;
     enableZshIntegration = true;
     enableNushellIntegration = true;
+    shellWrapperName = "y";
   };
 
   # Configuración de Helix (Editor en Rust)
