@@ -319,24 +319,6 @@
     };
   };
 
-  # Autoinicio de Vesktop vía Systemd (Home Manager)
-  systemd.user.services.vesktop-autostart = {
-    Unit = {
-      Description = "Vesktop Autostart (Declarative)";
-      After = [ "graphical-session.target" ];
-      Wants = [ "graphical-session.target" ];
-    };
-    Install = {
-      WantedBy = [ "graphical-session.target" ];
-    };
-    Service = {
-      Type = "simple";
-      ExecStart = "${pkgs.vesktop}/bin/vesktop";
-      Environment = "XDG_CURRENT_DESKTOP=niri:GNOME";
-      Restart = "on-failure";
-      RestartSec = 5;
-    };
-  };
 
   programs.vscode = {
     enable = true;
