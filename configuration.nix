@@ -233,7 +233,10 @@
     usbutils
     evtest
     virt-viewer
+    mangowc
   ];
+
+  services.displayManager.sessionPackages = [ pkgs.mangowc ];
 
   environment.sessionVariables = {
     WLR_NO_HARDWARE_CURSORS = "1";

@@ -6,6 +6,17 @@ Todos los cambios significativos, correcciones de errores y decisiones arquitect
 ### Fixed
 - **Blueman Applet**: Disabled the user-level systemd service `blueman-applet` to resolve the `ExecStart` conflict and "bad-setting" error. This avoids the use of `lib.mkForce` which was previously identified as a cause for Steam regressions. The applet remains functional via Niri's `spawn-at-startup`.
 
+## [2026-05-12] - Rust Stack & MangoWC Setup
+### Added
+- **Rust Stack**: Integrated `zed-editor`, `helix`, `foot`, `nushell`, `starship`, and `yazi` into Home Manager.
+- **Nushell Integration**: Configured `nushell` with `starship` prompt and set it as the default shell for `foot`.
+- **MangoWC**: Added `mangowc` as an alternative Wayland compositor.
+- **MangoWC Config**: Created `dotfiles/mango/config.conf` with dual-monitor support (DP-1 1440p/120Hz, DP-2 1080p/60Hz) and `foot` as default terminal.
+- **Terminal Switching**: Reverted Niri's main terminal to `kitty` while keeping `foot` available for the Rust-based workflow.
+
+### Fixed
+- **Configuration Hygiene**: Removed duplicated `programs.starship` block in `home.nix`.
+
 ### Removed
 - **Troubleshooting**: Temporarily removed `lib` argument and `blueman-applet` service override from `configuration.nix` to verify if they are causing Steam crashes on Niri.
 - **Isolation**: Pushed these changes to `fix/steam` branch and saved the original code in `stash@{0}` for quick restoration.

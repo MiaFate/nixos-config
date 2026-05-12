@@ -21,6 +21,7 @@
   xdg.configFile = {
     "niri".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/niri";
     "fastfetch".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/fastfetch";
+    "mango/config.conf".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/mango/config.conf";
   };
 
   home.file = {
@@ -56,6 +57,14 @@
     imagemagick
     swappy
     grimblast
+
+    # Rust-based stack tools
+    zed-editor
+    helix
+    foot
+    nushell
+    starship
+    yazi
 
     # Gaming
     mangohud
@@ -177,6 +186,65 @@
     style.name = "adwaita-dark";
   };
 
+  # Configuración de Nushell
+  programs.nushell = {
+    enable = true;
+    # Integración con starship se hace automáticamente si ambos están habilitados en Home Manager
+    # pero podemos añadir configuraciones extra si es necesario.
+    extraConfig = ''
+      $env.config = {
+        show_banner: false,
+      }
+    '';
+  };
+
+  programs.starship = {
+    enable = true;
+    enableZshIntegration = true;
+    enableNushellIntegration = true;
+    enableTransience = true;
+    settings = builtins.fromTOML (builtins.readFile ./dotfiles/starship.toml);
+  };
+
+  # Configuración de Foot (Terminal ligera en Rust/C)
+  programs.foot = {
+    enable = true;
+    settings = {
+      main = {
+        shell = "${pkgs.nushell}/bin/nu";
+        font = "JetBrainsMono Nerd Font:size=12";
+      };
+      colors = {
+        alpha = 0.9;
+        background = "1e1e2e"; # Catppuccin Mocha-ish
+        foreground = "cdd6f4";
+      };
+    };
+  };
+
+  # Configuración de Yazi (File Manager en Rust)
+  programs.yazi = {
+    enable = true;
+    enableZshIntegration = true;
+    enableNushellIntegration = true;
+  };
+
+  # Configuración de Helix (Editor en Rust)
+  programs.helix = {
+    enable = true;
+    settings = {
+      theme = "catppuccin_mocha";
+      editor = {
+        line-number = "relative";
+        cursor-shape = {
+          insert = "bar";
+          normal = "block";
+          select = "underline";
+        };
+      };
+    };
+  };
+
   # Configuración de Zsh vía Home Manager
   programs.zsh = {
     enable = true;
@@ -203,12 +271,6 @@
     enableZshIntegration = true;
   };
 
-  programs.starship = {
-    enable = true;
-    enableZshIntegration = true;
-    enableTransience = true;
-    settings = builtins.fromTOML (builtins.readFile ./dotfiles/starship.toml);
-  };
 
   programs.kitty = {
     enable = true;
