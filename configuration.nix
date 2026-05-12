@@ -176,7 +176,7 @@
   users.users.mia = {
     isNormalUser = true;
     description = "mia";
-    extraGroups = [ "networkmanager" "wheel" "input" "video" ];
+    extraGroups = [ "networkmanager" "wheel" "input" "video" "libvirtd"];
     shell = pkgs.zsh;
   };
 
@@ -230,6 +230,7 @@
     xwayland-satellite
     usbutils
     evtest
+    virt-viewer
   ];
 
   environment.sessionVariables = {
@@ -325,6 +326,17 @@
   # habilita flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  system.stateVersion = "25.11";
+  # Virtualization (KVM/QEMU)
+  virtualisation.libvirtd = {
+    enable = true;
+    qemu = {
+      package = pkgs.qemu_kvm;
+      runAsRoot = true;
+      swtpm.enable = true;
+    };
+  };
+  programs.virt-manager.enable = true;
+  virtualisation.spiceUSBRedirection.enable = true;
 
+  system.stateVersion = "25.11";
 }
