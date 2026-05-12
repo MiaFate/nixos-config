@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, inputs, lib, ... }:
 
 {
   imports =
@@ -169,7 +169,9 @@
     };
   };
   services.blueman.enable = true;
-  # Fix: blueman-applet service has multiple ExecStart due to conflict between package and module
+  systemd.user.services.blueman-applet.enable = false;
+  # Fix: blueman-applet service has multiple ExecStart due to conflict between package and module, 
+  # disabling systemd unit since it is managed by niri's spawn-at-startup.
 
 
   # Define a user account.

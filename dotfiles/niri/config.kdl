@@ -259,6 +259,7 @@ spawn-at-startup "systemctl" "--user" "start" "polkit-gnome-authentication-agent
 
 // Conditional shell startup
 spawn-sh-at-startup "if [ \"$NIRI_SHELL\" = \"noctalia\" ]; then noctalia-shell > /tmp/noctalia.log 2>&1; fi"
+spawn-at-startup "blueman-applet"
 
 hotkey-overlay {
     // Uncomment this line to disable the "Important Hotkeys" pop-up at startup.
