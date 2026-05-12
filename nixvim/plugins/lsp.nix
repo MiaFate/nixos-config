@@ -26,4 +26,6 @@
         "gr" = "references";
         "<leader>a" = "code_action";
       };
+    };
+  };
 }

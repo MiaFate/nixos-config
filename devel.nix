@@ -9,19 +9,19 @@
     lua-language-server     # Lua
     bash-language-server    # Bash
     marksman                # Markdown
-    nodePackages.vscode-json-languageserver # JSON
+    vscode-langservers-extracted # JSON, HTML, CSS
     yaml-language-server    # YAML
     taplo                   # TOML
     pyright                 # Python
     gopls                   # Go
-    jdtls                   # Java
+    jdt-language-server     # Java
     
     # --- Lenguajes / Runtimes ---
     go
     jdk
     
     # --- Formateadores y Linters ---
-    nixfmt-rfc-style        # Nix
+    nixfmt                  # Nix
     rustfmt                 # Rust
     shellcheck              # Bash
     shfmt                   # Bash

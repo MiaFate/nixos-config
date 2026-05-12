@@ -202,6 +202,7 @@
       $env.config = {
         show_banner: false,
       }
+      fastfetch
     '';
   };
 
@@ -244,7 +245,7 @@
       language = [{
         name = "nix";
         auto-format = true;
-        formatter = { command = "${pkgs.nixfmt-rfc-style}/bin/nixfmt"; };
+        formatter = { command = "${pkgs.nixfmt}/bin/nixfmt"; };
       }];
     };
     settings = {

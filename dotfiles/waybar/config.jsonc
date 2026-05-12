@@ -1,0 +1,95 @@
+{
+  "layer": "top",
+  "position": "top",
+  "mod": "dock",
+  "exclusive": true,
+  "passthrough": false,
+  "gtk-layer-shell": true,
+  "height": 40,
+  "modules-left": ["ext/workspaces", "dwl/window"],
+  "modules-center": ["clock"],
+  "modules-right": ["tray", "network", "pulseaudio", "battery", "custom/power"],
+
+  "ext/workspaces": {
+    "format": "{icon}",
+    "ignore-hidden": true,
+    "on-click": "activate",
+    "on-click-right": "deactivate",
+    "sort-by-id": true
+  },
+
+  "dwl/window": {
+    "format": "[{layout}] {title}"
+  },
+
+  "tray": {
+    "spacing": 10,
+  },
+
+  "clock": {
+    "format": "󰃭 {:%a %d %b  󱑒 %H:%M}",
+    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+  },
+
+  "cpu": {
+    "interval": 10,
+    "format": "󰍛 {usage}%",
+    "max-length": 10,
+  },
+
+  "memory": {
+    "interval": 30,
+    "format": "󰾆 {percentage}%",
+    "format-alt": "󰾅 {used}GB",
+    "max-length": 10,
+  },
+
+  "battery": {
+    "states": {
+      "good": 95,
+      "warning": 30,
+      "critical": 15,
+    },
+    "format": "{icon} {capacity}%",
+    "format-charging": "󰂄 {capacity}%",
+    "format-plugged": "󰂄 {capacity}%",
+    "format-alt": "{icon} {time}",
+    "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+  },
+
+  "network": {
+    "format-wifi": "󰖩 {essid}",
+    "format-ethernet": "󰈀 {ifname}",
+    "format-linked": "󰈀 {ifname} (No IP)",
+    "format-disconnected": "󰖪 Disconnected",
+    "format-alt": "{ifname}: {ipaddr}/{cidr}",
+  },
+
+  "pulseaudio": {
+    "format": "{icon} {volume}%",
+    "format-muted": "󰝟 Muted",
+    "on-click": "pavucontrol",
+    "scroll-step": 5,
+    "format-icons": {
+      "headphone": "",
+      "hands-free": "",
+      "headset": "",
+      "phone": "",
+      "portable": "",
+      "car": "",
+      "default": ["", "", ""],
+    },
+  },
+
+  "custom/launch": {
+    "format": "󱄅",
+    "on-click": "fuzzel",
+    "tooltip": false,
+  },
+
+  "custom/power": {
+    "format": "⏻",
+    "on-click": "wlogout",
+    "tooltip": false,
+  },
+}
