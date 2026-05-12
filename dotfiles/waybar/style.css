@@ -35,7 +35,7 @@ window#waybar {
 #modules-left,
 #modules-center,
 #modules-right {
-    background: rgba(30, 30, 46, 0.7);
+    background: rgba(30, 30, 46, 0.85);
     margin: 4px 4px;
     padding: 2px 8px;
     border-radius: 12px;
@@ -168,7 +168,6 @@ window#waybar {
 
 #custom-launch:hover {
     color: @mauve;
-    transform: scale(1.1);
 }
 
 #custom-power {
@@ -180,7 +179,6 @@ window#waybar {
 
 #custom-power:hover {
     color: @peach;
-    transform: rotate(90deg);
 }
 
 #window {

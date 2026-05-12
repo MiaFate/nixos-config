@@ -51,7 +51,7 @@
     inputs.zen-browser.packages."x86_64-linux".default
     (whitesur-gtk-theme.override { themeVariants = ["pink"]; })
     (colloid-icon-theme.override { colorVariants = ["pink"]; })
-    (antigravity.override { commandLineArgs = "--password-store=gnome-libsecret"; })
+    (antigravity.override { commandLineArgs = "--password-store=gnome-libsecret --disable-gpu-compositing --disable-features=WaylandFractionalScaleV1"; })
     playerctl
     hyprpicker
     eyedropper
