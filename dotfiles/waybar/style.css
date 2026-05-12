@@ -28,19 +28,16 @@
 }
 
 window#waybar {
-    background: transparent; /* Full transparency for the main bar container */
+    background-color: rgba(26, 27, 38, 0.95);
     color: @text;
+    border-bottom: 1px solid rgba(127, 91, 204, 0.2);
 }
 
 #modules-left,
 #modules-center,
 #modules-right {
-    background: rgba(30, 30, 46, 0.85);
     margin: 4px 4px;
     padding: 2px 8px;
-    border-radius: 12px;
-    border: 1px solid rgba(127, 91, 204, 0.3);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
 }
 
 #workspaces button {
