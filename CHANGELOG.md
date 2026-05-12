@@ -2,6 +2,11 @@
 
 Todos los cambios significativos, correcciones de errores y decisiones arquitectónicas se registran aquí.
 
+## [2026-05-12] - Steam Regression Troubleshooting
+### Removed
+- **Troubleshooting**: Temporarily removed `lib` argument and `blueman-applet` service override from `configuration.nix` to verify if they are causing Steam crashes on Niri.
+- **Isolation**: Pushed these changes to `fix/steam` branch and saved the original code in `stash@{0}` for quick restoration.
+
 ## [2026-05-10] - System Optimization and Fixes
 ### Fixed
 - **Blueman Applet**: Fixed the `blueman-applet.service` error ("bad-setting") by overriding the multiple `ExecStart` entries using `lib.mkForce`.
