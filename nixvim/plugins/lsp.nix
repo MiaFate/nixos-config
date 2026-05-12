@@ -26,12 +26,4 @@
         "gr" = "references";
         "<leader>a" = "code_action";
       };
-    };
-  };
-
-  # Paquetes adicionales requeridos por los LSPs o el entorno
-  home.packages = with pkgs; [
-    ripgrep
-    fd
-  ];
 }

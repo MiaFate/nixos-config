@@ -15,6 +15,7 @@
 
   imports = [
     ./nixvim
+    ./devel.nix
   ];
 
   # Enlaces a archivos de configuración (symlink editable)
@@ -74,6 +75,10 @@
     heroic
     lutris
     bottles
+
+    # Environment services
+    awww
+    wlogout
   ];
 
   home.pointerCursor = {
@@ -235,6 +240,13 @@
   # Configuración de Helix (Editor en Rust)
   programs.helix = {
     enable = true;
+    languages = {
+      language = [{
+        name = "nix";
+        auto-format = true;
+        formatter = { command = "${pkgs.nixfmt-rfc-style}/bin/nixfmt"; };
+      }];
+    };
     settings = {
       theme = "catppuccin_mocha";
       editor = {

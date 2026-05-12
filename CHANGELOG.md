@@ -6,6 +6,7 @@ Todos los cambios significativos, correcciones de errores y decisiones arquitect
 ### Fixed
 - **Blueman Applet**: Disabled the user-level systemd service `blueman-applet` to resolve the `ExecStart` conflict and "bad-setting" error. This avoids the use of `lib.mkForce` which was previously identified as a cause for Steam regressions. The applet remains functional via Niri's `spawn-at-startup`.
 - **Foot Terminal**: Updated `home.nix` to use `colors-dark` instead of the deprecated `colors` attribute, resolving the startup warning.
+- **Development Environment**: Modularized LSPs and development tools into a new `devel.nix` file. This centralizes language support for Helix, NixVim, and other editors while keeping `home.nix` clean.
 
 ## [2026-05-12] - Rust Stack & MangoWC Setup
 ### Added
