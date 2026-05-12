@@ -5,6 +5,7 @@ Todos los cambios significativos, correcciones de errores y decisiones arquitect
 ## [2026-05-12] - Steam Regression Troubleshooting & Blueman Fix
 ### Fixed
 - **Blueman Applet**: Disabled the user-level systemd service `blueman-applet` to resolve the `ExecStart` conflict and "bad-setting" error. This avoids the use of `lib.mkForce` which was previously identified as a cause for Steam regressions. The applet remains functional via Niri's `spawn-at-startup`.
+- **Foot Terminal**: Updated `home.nix` to use `colors-dark` instead of the deprecated `colors` attribute, resolving the startup warning.
 
 ## [2026-05-12] - Rust Stack & MangoWC Setup
 ### Added
@@ -12,6 +13,8 @@ Todos los cambios significativos, correcciones de errores y decisiones arquitect
 - **Nushell Integration**: Configured `nushell` with `starship` prompt and set it as the default shell for `foot`.
 - **MangoWC**: Added `mangowc` as an alternative Wayland compositor.
 - **MangoWC Config**: Created `dotfiles/mango/config.conf` with dual-monitor support (DP-1 1440p/120Hz, DP-2 1080p/60Hz) and `foot` as default terminal.
+- **Waybar**: Installed and configured `waybar` with a premium pink/dark theme in `dotfiles/waybar`. Linked via Home Manager.
+- **Waybar (Mango)**: Updated configuration with `ext/workspaces` and `dwl/window` modules for improved MangoWC integration.
 - **Terminal Switching**: Reverted Niri's main terminal to `kitty` while keeping `foot` available for the Rust-based workflow.
 
 ### Fixed

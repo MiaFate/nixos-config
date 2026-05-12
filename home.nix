@@ -23,6 +23,7 @@
     "fastfetch".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/fastfetch";
     "mango/config.conf".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/mango/config.conf";
     "xdg-desktop-portal/mango-portals.conf".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/mango/mango-portals.conf";
+    "waybar".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/waybar";
   };
 
   home.file = {
@@ -215,7 +216,7 @@
         shell = "${pkgs.nushell}/bin/nu";
         font = "JetBrainsMono Nerd Font:size=12";
       };
-      colors = {
+      "colors-dark" = {
         alpha = 0.9;
         background = "1e1e2e"; # Catppuccin Mocha-ish
         foreground = "cdd6f4";
@@ -339,6 +340,7 @@
     };
   };
 
+  programs.waybar.enable = true;
   programs.home-manager.enable = true;
   home.stateVersion = "25.11";
 }
