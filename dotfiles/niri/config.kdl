@@ -9,6 +9,7 @@
 
 environment {
     XDG_CURRENT_DESKTOP "niri:GNOME"
+    XDG_SESSION_TYPE "wayland"
 }
 
 // niri can either use its built-in Xwayland implementation, or xwayland-satellite.
