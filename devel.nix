@@ -13,6 +13,12 @@
     yaml-language-server    # YAML
     taplo                   # TOML
     pyright                 # Python
+    gopls                   # Go
+    jdtls                   # Java
+    
+    # --- Lenguajes / Runtimes ---
+    go
+    jdk
     
     # --- Formateadores y Linters ---
     nixfmt-rfc-style        # Nix
