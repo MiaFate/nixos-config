@@ -1,23 +1,4 @@
-/* Color Variables - Catppuccin Mocha Palette */
-@define-color base   #1e1e2e;
-@define-color crust  #11111b;
-@define-color text   #cdd6f4;
-@define-color subtext0 #a6adc8;
-@define-color surface0 #313244;
-@define-color surface1 #45475a;
-@define-color surface2 #585b70;
-@define-color overlay0 #6c7086;
-@define-color pink   #f5c2e7;
-@define-color mauve  #cba6f7;
-@define-color red    #f38ba8;
-@define-color peach  #fab387;
-@define-color yellow #f9e2af;
-@define-color green  #a6e3a1;
-@define-color teal   #94e2d5;
-@define-color sky    #89dceb;
-@define-color sapphire #74c7ec;
-@define-color blue   #89b4fa;
-@define-color lavender #b4befe;
+/* GTK CSS for Waybar - Hardcoded colors for better IDE compatibility */
 
 * {
     border: none;
@@ -29,7 +10,7 @@
 
 window#waybar {
     background-color: rgba(26, 27, 38, 0.95);
-    color: @text;
+    color: #cdd6f4;
     border-bottom: 1px solid rgba(127, 91, 204, 0.2);
 }
 
@@ -37,79 +18,64 @@ window#waybar {
     padding: 0 8px;
     margin: 4px 2px;
     background-color: transparent;
-    color: @subtext0;
+    color: #a6adc8;
     border-radius: 8px;
 }
 
 #tags button:hover {
     background-color: rgba(127, 91, 204, 0.2);
-    color: @pink;
+    color: #f5c2e7;
 }
 
 #tags button.focused,
 #tags button.active {
-    background-color: @lavender;
-    color: @crust;
+    background-color: #b4befe;
+    color: #11111b;
     font-weight: bold;
 }
 
 #tags button.urgent {
-    background-color: @red;
-    color: @crust;
+    background-color: #f38ba8;
+    color: #11111b;
 }
 
-#clock,
-#battery,
-#cpu,
-#memory,
-#disk,
-#temperature,
-#backlight,
-#network,
-#pulseaudio,
-#wireplumber,
-#custom-media,
-#tray,
-#mode,
-#idle_inhibitor,
-#scratchpad,
-#mpd {
+#clock, #battery, #cpu, #memory, #disk, #temperature, #backlight, #network, #pulseaudio, #tray, #window {
     padding: 0 10px;
-    color: @text;
+    color: #cdd6f4;
 }
 
 #clock {
-    color: @lavender;
+    color: #b4befe;
     font-weight: bold;
 }
 
 #pulseaudio {
-    color: @sapphire;
+    color: #74c7ec;
 }
 
 #pulseaudio.muted {
-    color: @overlay0;
+    color: #6c7086;
 }
 
 #network {
-    color: @teal;
+    color: #94e2d5;
 }
 
 #network.disconnected {
-    color: @red;
+    color: #f38ba8;
 }
 
 #battery {
-    color: @green;
+    color: #a6e3a1;
 }
 
 #battery.charging,
 #battery.plugged {
-    color: @teal;
+    color: #94e2d5;
 }
 
 #battery.critical:not(.charging) {
-    color: @red;
+    color: #f38ba8;
 }
 
 #tray {
@@ -119,16 +85,16 @@ window#waybar {
 #custom-launch {
     font-size: 18px;
     margin-left: 8px;
-    color: @pink;
+    color: #f5c2e7;
 }
 
 #custom-power {
     font-size: 16px;
     margin-right: 8px;
-    color: @red;
+    color: #f38ba8;
 }
 
 #window {
     font-weight: bold;
-    color: @pink;
+    color: #f5c2e7;
 }
