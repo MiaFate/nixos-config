@@ -2,6 +2,22 @@
 
 Todos los cambios significativos, correcciones de errores y decisiones arquitectónicas se registran aquí.
 
+## [2026-05-12] - System Perfection and Stability Phase
+### Fixed
+- **NVIDIA udev Noise**: Enabled `nvidiaPersistenced` and added udev rules to resolve `mknod` failures and reduce system log noise.
+- **USB Errors**: Implemented udev rules to disable autosuspend for the Genesys Logic Hub and Xbox One Controller, addressing `device descriptor read/64, error -32`.
+- **Desktop Portals**: Removed `xdg-desktop-portal-gnome` to resolve conflicts with MangoWC/Niri. Refined portal routing to use `gtk` and `wlr` explicitly.
+- **MangoWC Performance**: Tuned animation durations to reduce CPU spikes during window management.
+
+### Added
+- **Storage Maintenance**: Enabled `services.fstrim.enable` for automatic NVMe health management.
+- **Shell Experience**: Enhanced Zsh with `autosuggestions`, `completions`, and premium aliases (`lsd`, `bat`).
+- **Monitoring**: Added `btop` for high-end system monitoring.
+- **Niri UX**: Added specific window rules for Spotify, Google Chrome, and maximized Steam for a smoother tiling experience.
+
+### Changed
+- **Aesthetics**: Refined workspace targeting and window dimensions in Niri to align with the "Perfect System" objective.
+
 ## [2026-05-12] - Steam Regression Troubleshooting & Blueman Fix
 ### Fixed
 - **Blueman Applet**: Disabled the user-level systemd service `blueman-applet` to resolve the `ExecStart` conflict and "bad-setting" error. This avoids the use of `lib.mkForce` which was previously identified as a cause for Steam regressions. The applet remains functional via Niri's `spawn-at-startup`.

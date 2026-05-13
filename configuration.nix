@@ -98,6 +98,7 @@
     powerManagement.finegrained = false;
     open = false;
     nvidiaSettings = true;
+    nvidiaPersistenced = true; # Ayuda a mantener los nodos de dispositivo abiertos y reduce ruido en udev
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
 
@@ -128,6 +129,7 @@
   services.gvfs.enable = true; # Soporte para papelera y montaje de discos
   services.udisks2.enable = true; # Manejo de discos sin root
   services.tumbler.enable = true; # Soporte para miniaturas
+  services.fstrim.enable = true; # Mantenimiento automático de SSDs (NVMe)
 
   # Enable sound with pipewire.
   services.pulseaudio.enable = false;
@@ -251,20 +253,19 @@
   xdg.portal = {
     enable = true;
     extraPortals = [ 
-      pkgs.xdg-desktop-portal-gnome
       pkgs.xdg-desktop-portal-gtk
       pkgs.xdg-desktop-portal-wlr
     ];
     config = {
       niri = {
-        default = [ "gnome" "gtk" ];
+        default = [ "gtk" ];
         "org.freedesktop.impl.portal.FileChooser" = [ "gtk" ];
-        "org.freedesktop.impl.portal.ScreenCast" = [ "gnome" ];
-        "org.freedesktop.impl.portal.Screenshot" = [ "gnome" ];
+        "org.freedesktop.impl.portal.ScreenCast" = [ "wlr" ];
+        "org.freedesktop.impl.portal.Screenshot" = [ "wlr" ];
         "org.freedesktop.impl.portal.ColorPicker" = [ "gtk" ];
       };
       common = {
-        default = [ "gnome" "gtk" ];
+        default = [ "gtk" ];
         "org.freedesktop.impl.portal.FileChooser" = [ "gtk" ];
       };
     };
@@ -323,6 +324,14 @@
     IdleAction = "ignore";
     IdleActionSec = "30min";
   };
+
+  # Fix para USB y Controller (Error -32 y Timeouts)
+  services.udev.extraRules = ''
+    # Desactivar autosuspend para el Hub Genesys Logic (causante de ruidos en logs)
+    ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="05e3", ATTR{idProduct}=="0610", ATTR{power/control}="on"
+    # Fix para Xbox One Controller (Timeout y Descriptor errors)
+    ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="045e", ATTR{idProduct}=="02ea", ATTR{power/control}="on"
+  '';
 
   # ZRAM Swap (Recomendado para evitar congelamientos)
   zramSwap.enable = true;

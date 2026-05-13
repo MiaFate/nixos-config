@@ -373,6 +373,17 @@ window-rule {
     open-maximized true
 }
 
+window-rule {
+    match app-id=r#"^spotify$"#
+    default-column-width { proportion 0.6; }
+    open-on-workspace "music"
+}
+
+window-rule {
+    match app-id=r#"^google-chrome$"#
+    default-column-width { proportion 0.7; }
+}
+
 /*
 window-rule {
     match app-id=r#"THPS12.exe"#

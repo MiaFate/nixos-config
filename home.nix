@@ -1,5 +1,10 @@
 # Dummy comment to force rebuild
-{ config, pkgs, inputs, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 
 {
   home.username = "mia";
@@ -20,15 +25,21 @@
 
   # Enlaces a archivos de configuración (symlink editable)
   xdg.configFile = {
-    "niri".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/niri";
-    "fastfetch".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/fastfetch";
-    "mango/config.conf".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/mango/config.conf";
-    "xdg-desktop-portal/mango-portals.conf".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/mango/mango-portals.conf";
-    "waybar".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/waybar";
+    "niri".source =
+      config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/niri";
+    "fastfetch".source =
+      config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/fastfetch";
+    "mango/config.conf".source =
+      config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/mango/config.conf";
+    "xdg-desktop-portal/mango-portals.conf".source =
+      config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/mango/mango-portals.conf";
+    "waybar".source =
+      config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/waybar";
   };
 
   home.file = {
-    "GEMINI.md".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/GEMINI.md";
+    "GEMINI.md".source =
+      config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/GEMINI.md";
   };
 
   # Paquetes de usuario
@@ -40,7 +51,7 @@
     # nerd-fonts.jetbrains-mono # Ya está en configuration.nix
     # vim # Gestionado por programs.neovim
     # neovim # Gestionado por programs.neovim
-     alacritty
+    alacritty
     fuzzel
     vesktop
     spotify
@@ -49,9 +60,11 @@
     mpv
     qt6Packages.fcitx5-configtool
     inputs.zen-browser.packages."x86_64-linux".default
-    (whitesur-gtk-theme.override { themeVariants = ["pink"]; })
-    (colloid-icon-theme.override { colorVariants = ["pink"]; })
-    (antigravity.override { commandLineArgs = "--password-store=gnome-libsecret --disable-gpu-compositing --disable-features=WaylandFractionalScaleV1"; })
+    (whitesur-gtk-theme.override { themeVariants = [ "pink" ]; })
+    (colloid-icon-theme.override { colorVariants = [ "pink" ]; })
+    (antigravity.override {
+      commandLineArgs = "--password-store=gnome-libsecret --disable-gpu-compositing --disable-features=WaylandFractionalScaleV1";
+    })
     playerctl
     hyprpicker
     eyedropper
@@ -79,6 +92,9 @@
     # Environment services
     awww
     wlogout
+    btop
+    lsd
+    bat
   ];
 
   home.pointerCursor = {
@@ -98,11 +114,11 @@
     };
     theme = {
       name = "WhiteSur-Dark-pink";
-      package = (pkgs.whitesur-gtk-theme.override { themeVariants = ["pink"]; });
+      package = (pkgs.whitesur-gtk-theme.override { themeVariants = [ "pink" ]; });
     };
     iconTheme = {
       name = "Colloid-Pink-Dark";
-      package = pkgs.colloid-icon-theme.override { colorVariants = ["pink"]; };
+      package = pkgs.colloid-icon-theme.override { colorVariants = [ "pink" ]; };
     };
     gtk3.extraConfig = {
       gtk-application-prefer-dark-theme = 1;
@@ -123,11 +139,11 @@
       };
       listener = [
         {
-          timeout = 300;          # 5 min → bloquear pantalla
+          timeout = 300; # 5 min → bloquear pantalla
           on-timeout = "loginctl lock-session";
         }
         {
-          timeout = 1800;         # 30 min → suspender sistema
+          timeout = 1800; # 30 min → suspender sistema
           on-timeout = "systemctl suspend";
         }
       ];
@@ -220,6 +236,7 @@
     settings = {
       main = {
         shell = "${pkgs.nushell}/bin/nu";
+        pad = "10x10";
         font = "JetBrainsMono Nerd Font:size=12";
       };
       "colors-dark" = {
@@ -242,11 +259,15 @@
   programs.helix = {
     enable = true;
     languages = {
-      language = [{
-        name = "nix";
-        auto-format = true;
-        formatter = { command = "${pkgs.nixfmt}/bin/nixfmt"; };
-      }];
+      language = [
+        {
+          name = "nix";
+          auto-format = true;
+          formatter = {
+            command = "${pkgs.nixfmt}/bin/nixfmt";
+          };
+        }
+      ];
     };
     settings = {
       theme = "catppuccin_mocha";
@@ -264,12 +285,17 @@
   # Configuración de Zsh vía Home Manager
   programs.zsh = {
     enable = true;
+    enableCompletion = true;
+    autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
     shellAliases = {
+      ls = "lsd";
+      cat = "bat";
+      top = "btop";
     };
     oh-my-zsh = {
       enable = true;
-      plugins = [ "git" ];
+      plugins = [ "git" "sudo" "docker" "command-not-found" ];
     };
     initContent = ''
       fastfetch
@@ -287,6 +313,12 @@
     enableZshIntegration = true;
   };
 
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
+    enableZshIntegration = true;
+    enableNushellIntegration = true;
+  };
 
   programs.kitty = {
     enable = true;
@@ -302,7 +334,7 @@
       cursor_trail = 1;
       enable_audio_bell = "no";
       window_padding_width = 10;
-      
+
       # Integración y Control
       shell_integration = "enabled";
       allow_remote_control = "yes";
@@ -312,7 +344,7 @@
 
       # Layouts
       enabled_layouts = "splits,stack";
-      
+
       # Rendimiento (Optimizado para NVIDIA/Wayland)
       repaint_delay = 8;
       input_delay = 2;
@@ -334,7 +366,6 @@
       "ctrl+shift+t" = "new_tab_with_cwd";
     };
   };
-
 
   programs.vscode = {
     enable = true;
